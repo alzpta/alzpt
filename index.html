@@ -27,13 +27,6 @@
       /* Effects */
       --shadow-md:0 10px 34px rgba(0,0,0,.12);
       --shadow-lg:0 16px 60px rgba(0,0,0,.16);
-
-      /* 🔹 Extras para alinear nav + secciones y anchors */
-      --content: 980px;                /* ancho visual “contenido” */
-      --gutter-x: 24px;                /* margen interno lateral coherente */
-      --nav-sticky-gap: 12px;          /* separación desde el top */
-      --nav-height: 60px;
-      --anchor-offset: calc(var(--nav-height) + var(--nav-sticky-gap) + 16px);
     }
     [data-theme="dark"]{
       --ink:242,246,252; --muted:200,210,230;
@@ -50,11 +43,6 @@
     img{max-width:100%;height:auto}
     .container{width:min(var(--container),92%);margin-inline:auto}
     .section{margin:var(--xl) 0}
-    /* 🔹 Todas las cajas .glass dentro de sección comparten ancho centrado */
-    .section > .glass { width:min(var(--content),100%); margin-inline:auto; }
-    /* 🔹 Offset de anclas para nav sticky */
-    section[id]{scroll-margin-top: var(--anchor-offset)}
-
     a{color:inherit;text-decoration:none}
     a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid color-mix(in oklab,var(--brand-1),white 20%);outline-offset:2px;border-radius:10px}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -81,7 +69,7 @@
     .skip{position:absolute;left:-9999px}
     .skip:focus{left:12px;top:12px;z-index:100;background:#fff;color:#000;padding:6px 10px;border-radius:999px}
     .nav-wrap{position:sticky;top:12px;z-index:40}
-    nav.glass{display:flex;align-items:center;justify-content:space-between;padding:8px var(--gutter-x);border-radius:18px}
+    nav.glass{display:flex;align-items:center;justify-content:space-between;padding:var(--sm) var(--md);border-radius:18px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
     .dot{width:12px;height:12px;border-radius:999px;background:var(--brand-1);box-shadow:0 0 24px var(--brand-1)}
     .nav-links{display:flex;gap:8px;flex-wrap:wrap}
@@ -90,37 +78,60 @@
     .btn.primary{border-color:transparent;background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#081019;font-weight:700}
     .btn.ghost{background:transparent}
 
-    /* Hero – fullscreen + blob + orb */
-    .hero{min-height:100svh;display:grid;grid-template-columns:1.15fr 1fr;gap:var(--md);align-items:center;position:relative;padding:var(--lg) var(--gutter-x)}
-    .hero h1{font-size:var(--fs-6);line-height:1.05;margin:0;position:relative}
-    /* Blob suave detrás del título */
-    .hero h1::after{content:"";position:absolute;left:-10px;top:-14px;width:38vmin;max-width:520px;height:38vmin;max-height:520px;border-radius:50%;
-      background:
-        radial-gradient(40% 40% at 30% 30%, color-mix(in oklab, var(--brand-1) 65%, transparent), transparent 60%),
-        radial-gradient(45% 45% at 70% 70%, color-mix(in oklab, var(--brand-2) 55%, transparent), transparent 65%);
-      filter:blur(32px) saturate(120%);opacity:.32;z-index:-1;pointer-events:none}
+    /* Theme toggle */
+    .theme-toggle{position:fixed;right:16px;bottom:16px;display:flex;gap:6px;padding:6px;border-radius:14px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);backdrop-filter:blur(10px)}
+    .theme-toggle button{border:0;background:transparent;padding:8px;border-radius:10px;cursor:pointer}
+    .theme-toggle button[aria-pressed="true"]{outline:2px solid color-mix(in oklab,var(--brand-2),white 20%)}
+
+    /* Hero (por defecto, no full) */
+    .hero{padding:var(--lg);display:grid;grid-template-columns:1.15fr 1fr;gap:var(--md);align-items:center}
+    .hero h1{font-size:var(--fs-6);line-height:1.05;margin:0}
     .hero p{margin-top:var(--sm);font-size:var(--fs-3);color:rgb(var(--muted))}
     .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:var(--md)}
-    /* Contenedor de texto para aislar capas */
-    .hero .intro{position:relative;isolation:isolate}
-    /* Avatar en orbe de vidrio */
-    .avatar{position:relative;display:grid;place-items:center;padding:var(--md)}
-    .glass-orb{position:relative;width:260px;height:260px;border-radius:50%;
-      background:
-        radial-gradient(120% 120% at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.18) 60%, rgba(255,255,255,.08) 100%),
-        linear-gradient(135deg, color-mix(in oklab, var(--brand-1) 60%, transparent), color-mix(in oklab, var(--brand-2) 60%, transparent));
-      -webkit-backdrop-filter: blur(14px) saturate(120%);
-      backdrop-filter: blur(14px) saturate(120%);
-      box-shadow: 0 20px 60px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.55);
-      overflow:hidden;border:1px solid rgba(255,255,255,.5)}
-    .glass-orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(60% 40% at 30% 20%, rgba(255,255,255,.6), transparent 60%);mix-blend-mode:screen}
-    .glass-orb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9;filter:saturate(110%);clip-path:circle(50% at 50% 50%)}
-    /* Indicador de scroll */
-    .scrolldown{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);padding:8px 12px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent);text-decoration:none;opacity:.85}
+    .avatar{display:grid;place-items:center;padding:var(--md)}
+    .avatar img{width:168px;height:168px;border-radius:50%;border:2px solid rgba(255,255,255,.55);box-shadow:0 6px 28px rgba(0,0,0,.12);aspect-ratio:1/1}
+
+    /* === Hero a pantalla completa con imagen difusa === */
+    .hero.bg-image{
+      min-height:100svh;
+      position:relative;
+      display:grid;
+      place-items:center;
+      padding:calc(var(--xl) + 20px) var(--lg);
+      border-radius:var(--glass-radius);
+      overflow:hidden;
+    }
+    .hero.bg-image .bg-img{
+      position:absolute;inset:0;
+      background-size:cover;background-position:center;background-repeat:no-repeat;
+      filter:blur(18px) saturate(115%);
+      transform:scale(1.06);
+      z-index:-2;
+    }
+    .hero.bg-image .bg-shade{
+      position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(2,6,23,.65), rgba(2,6,23,.35) 35%, rgba(2,6,23,.65));
+      z-index:-1;
+    }
+    .hero.bg-image .center{
+      width:min(var(--container),92%);
+      margin-inline:auto;
+      display:grid;gap:18px;justify-items:center;text-align:center;
+      color:#fff;
+    }
+    .hero.bg-image .center h1{
+      font-size:clamp(36px,6.5vw,64px);line-height:1.05;margin:0;
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .hero.bg-image .center p{max-width:70ch;color:rgba(255,255,255,.9);font-size:var(--fs-3)}
+    .hero.bg-image .center .cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .hero.bg-image .center .glass{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.08));box-shadow:0 16px 60px rgba(0,0,0,.28);padding:var(--lg);border:1px solid rgba(255,255,255,.35)}
+    .scrolldown{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);padding:8px 12px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent);text-decoration:none;opacity:.85;color:#fff}
     .scrolldown:hover{opacity:1;box-shadow:var(--shadow-md)}
 
     /* About */
-    .about{padding:var(--lg) var(--gutter-x);text-align:center}
+    .about{padding:var(--lg);text-align:center}
     .about h2{font-size:var(--fs-5);margin-bottom:var(--xs)}
     .about p{max-width:70ch;margin-inline:auto;color:rgb(var(--muted));font-size:var(--fs-3);line-height:1.7}
     .timeline{margin-top:var(--md);display:grid;gap:var(--sm)}
@@ -128,12 +139,12 @@
     .step .dot{width:10px;height:10px;border-radius:50%;background:var(--brand-2);box-shadow:0 0 14px var(--brand-2);margin-top:8px}
 
     /* Stats strip */
-    .stats{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sm);padding:var(--sm) var(--gutter-x)}
+    .stats{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sm);padding:var(--sm)}
     .stat{grid-column:span 4;padding:var(--md);text-align:center;border-radius:16px;background:color-mix(in oklab,white 22%,transparent);border:1px solid var(--hairline)}
     .stat b{font-size:clamp(18px,4vw,28px)}
 
     /* Projects */
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--md);padding:var(--md) var(--gutter-x)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--md);padding:var(--md)}
     .card{grid-column:span 4;padding:var(--md);border-radius:18px;border:1px solid var(--hairline);background:linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.18));box-shadow:var(--shadow-md)}
     .card h3{margin:2px 0 var(--xs);font-size:var(--fs-4)}
     .card p{color:rgb(var(--muted));font-size:var(--fs-2)}
@@ -141,14 +152,14 @@
     .tag{font-size:.8rem;padding:6px 10px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent)}
 
     /* Gallery */
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--md);padding:var(--md) var(--gutter-x)}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--md);padding:var(--md)}
     .tile{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--hairline)}
     .tile img{width:100%;display:block;transition:transform .5s,box-shadow .5s;aspect-ratio:16/10;object-fit:cover}
     .tile:hover img{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 30px rgba(0,0,0,.14)}
     .tile span{position:absolute;left:10px;bottom:10px;font-size:.78rem;background:color-mix(in oklab,white 22%,transparent);border:1px solid var(--hairline);padding:6px 10px;border-radius:999px}
 
     /* Contact */
-    .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--md);padding:var(--md) var(--gutter-x)}
+    .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--md);padding:var(--md)}
     form{display:grid;gap:var(--sm)}
     input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.9);font-size:var(--fs-2)}
     .note{font-size:var(--fs-1);color:rgb(var(--muted));margin-top:var(--xs)}
@@ -161,8 +172,8 @@
 
     /* Responsive */
     @media (max-width:960px){
-      .hero{grid-template-columns:1fr;place-items:center;text-align:center}
-      .avatar .glass-orb{width:200px;height:200px}
+      .hero{grid-template-columns:1fr}
+      .hero.bg-image{padding:calc(var(--lg) + 10px) var(--md)}
       .card{grid-column:span 6}
       .contact{grid-template-columns:1fr}
       .stat{grid-column:span 6}
@@ -205,23 +216,24 @@
   </div>
 
   <main id="main">
-    <!-- HERO (pantalla completa) -->
-    <section class="container section reveal" aria-labelledby="hero-title">
-      <div class="glass hero">
-        <div class="intro">
-          <p style="margin:0 0 var(--xs) 0;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Portfolio</p>
-          <h1 id="hero-title">Hola, soy <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Aldair</span>.</h1>
-          <p>Creo productos digitales con estética <b>Liquid Glass</b>, alto rendimiento y accesibilidad real.</p>
-          <div class="cta">
-            <a class="btn" href="#projects">Ver proyectos</a>
-            <a class="btn" href="#contacto">Hablemos</a>
+    <!-- HERO: pantalla completa con imagen difusa -->
+    <section class="section reveal" aria-labelledby="hero-title">
+      <div class="hero bg-image">
+        <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop');"></div>
+        <div class="bg-shade"></div>
+
+        <div class="center">
+          <div class="glass" style="padding:var(--lg)">
+            <p style="margin:0 0 var(--xs) 0;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.9;color:#fff">Portfolio</p>
+            <h1 id="hero-title">Hola, soy <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Aldair</span>.</h1>
+            <p>Creo productos digitales con estética <b>Liquid Glass</b>, alto rendimiento y accesibilidad real.</p>
+            <div class="cta" style="margin-top:var(--md);justify-content:center">
+              <a class="btn" href="#projects">Ver proyectos</a>
+              <a class="btn primary" href="#contacto">Hablemos</a>
+            </div>
           </div>
         </div>
-        <div class="avatar">
-          <div class="glass-orb">
-            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=600&auto=format&fit=crop" alt="Avatar de Aldair" />
-          </div>
-        </div>
+
         <a href="#about" class="scrolldown" aria-label="Desplázate a Sobre mí">↓</a>
       </div>
     </section>
@@ -253,7 +265,7 @@
     <!-- PROJECTS -->
     <section id="projects" class="container section reveal" aria-labelledby="projects-title">
       <div class="glass">
-        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--gutter-x) 0">
+        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
           <h2 id="projects-title" style="font-size:var(--fs-5);margin:0">Proyectos</h2>
           <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Selección</span>
         </div>
@@ -283,7 +295,7 @@
     <!-- GALLERY -->
     <section id="galeria" class="container section reveal" aria-labelledby="gallery-title">
       <div class="glass">
-        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--gutter-x) 0">
+        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
           <h2 id="gallery-title" style="font-size:var(--fs-5);margin:0">Galería</h2>
           <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Liquid Glass UI</span>
         </div>
