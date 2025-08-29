@@ -49,9 +49,9 @@
     <section class="container section reveal" aria-labelledby="hero-title">
       <div class="glass hero narrow">
         <div>
-          <p style="margin:0 0 var(--xs) 0;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Portfolio</p>
-          <h1 id="hero-title">Hola, soy <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Aldair</span>.</h1>
-          <p>Creo productos digitales con estética <b>Liquid Glass</b>, alto rendimiento y accesibilidad real.</p>
+          <p class="eyebrow">Portfolio</p>
+          <h1 id="hero-title">Hola, soy <span class="gradient-text">Aldair</span>.</h1>
+          <p>Creo productos digitales con estética <strong>Liquid Glass</strong>, alto rendimiento y accesibilidad real.</p>
           <div class="cta">
             <a class="btn" href="#projects">Ver proyectos</a>
             <a class="btn" href="#contacto">Hablemos</a>
@@ -72,8 +72,8 @@
         <p>Ingeniero informático y creador. Diseño interfaces con estética Liquid Glass para apps y webs. Me enfoco en accesibilidad, microinteracciones y rendimiento. Trabajo con Firebase, Stripe y PWAs.</p>
         <div class="timeline" aria-label="Hitos recientes">
           <div class="step"><span class="dot" aria-hidden="true"></span><div><strong>2025</strong> · CuidApp MVP (Geo + pagos + SOS)</div></div>
-          <div class="step"><span class="dot" style="background:var(--brand-1);box-shadow:0 0 14px var(--brand-1)" aria-hidden="true"></span><div><strong>2024</strong> · Carta Nomo (PWA) con grid 1–100 y panel admin</div></div>
-          <div class="step"><span class="dot" style="background:var(--brand-3);box-shadow:0 0 14px var(--brand-3)" aria-hidden="true"></span><div><strong>2023</strong> · Iberia Sonora – arquitectura musical</div></div>
+          <div class="step"><span class="dot dot-brand-1" aria-hidden="true"></span><div><strong>2024</strong> · Carta Nomo (PWA) con grid 1–100 y panel admin</div></div>
+          <div class="step"><span class="dot dot-brand-3" aria-hidden="true"></span><div><strong>2023</strong> · Iberia Sonora – arquitectura musical</div></div>
         </div>
       </div>
     </section>
@@ -82,9 +82,9 @@
     <section class="container section reveal">
       <div class="glass soft narrow">
         <div class="stats">
-          <div class="stat"><b>+20</b><br><small>Interfaces entregadas</small></div>
-          <div class="stat"><b>~98</b><br><small>Score Lighthouse</small></div>
-          <div class="stat"><b>AA</b><br><small>Accesibilidad WCAG</small></div>
+          <div class="stat"><strong>+20</strong><br><small>Interfaces entregadas</small></div>
+          <div class="stat"><strong>~98</strong><br><small>Score Lighthouse</small></div>
+          <div class="stat"><strong>AA</strong><br><small>Accesibilidad WCAG</small></div>
         </div>
       </div>
     </section>
@@ -92,28 +92,28 @@
     <!-- PROJECTS -->
     <section id="projects" class="container section reveal" aria-labelledby="projects-title">
       <div class="glass narrow">
-        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--gutter-x) 0">
-          <h2 id="projects-title" style="font-size:var(--fs-5);margin:0">Proyectos</h2>
-          <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Selección</span>
+        <div class="section-header">
+          <h2 id="projects-title">Proyectos</h2>
+          <span class="eyebrow">Selección</span>
         </div>
         <div class="grid">
           <article class="card" aria-labelledby="p1-title">
             <h3 id="p1-title">CuidApp</h3>
             <p>Familias ↔ cuidadores verificados. Geo, agenda, Stripe Connect, SOS.</p>
             <div class="tags"><span class="tag">PWA</span><span class="tag">Firebase</span><span class="tag">Stripe</span></div>
-            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Demo</a><a class="btn ghost" href="#">Código</a></div>
+            <div class="cta cta-sm"><a class="btn" href="#">Demo</a><a class="btn ghost" href="#">Código</a></div>
           </article>
           <article class="card" aria-labelledby="p2-title">
             <h3 id="p2-title">Carta Nomo</h3>
             <p>Carta digital con Liquid Glass, grid 1–100, voz e imágenes optimizadas.</p>
             <div class="tags"><span class="tag">PWA</span><span class="tag">A11y</span><span class="tag">Performance</span></div>
-            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Demo</a><a class="btn ghost" href="#">Código</a></div>
+            <div class="cta cta-sm"><a class="btn" href="#">Demo</a><a class="btn ghost" href="#">Código</a></div>
           </article>
           <article class="card" aria-labelledby="p3-title">
             <h3 id="p3-title">Iberia Sonora</h3>
             <p>Estudio de arquitectura musical: lanzamientos, ambient y experiencias.</p>
             <div class="tags"><span class="tag">Audio</span><span class="tag">Branding</span></div>
-            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Escuchar</a><a class="btn ghost" href="#">Press Kit</a></div>
+            <div class="cta cta-sm"><a class="btn" href="#">Escuchar</a><a class="btn ghost" href="#">Press Kit</a></div>
           </article>
         </div>
       </div>
@@ -122,15 +122,15 @@
     <!-- GALLERY -->
     <section id="galeria" class="container section reveal" aria-labelledby="gallery-title">
       <div class="glass narrow">
-        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--gutter-x) 0">
-          <h2 id="gallery-title" style="font-size:var(--fs-5);margin:0">Galería</h2>
-          <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Liquid Glass UI</span>
+        <div class="section-header">
+          <h2 id="gallery-title">Galería</h2>
+          <span class="eyebrow">Liquid Glass UI</span>
         </div>
         <div class="gallery">
-          <figure class="tile"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="Tema Aurora" loading="lazy" decoding="async" width="1200" height="750"><span>Aurora</span></figure>
-          <figure class="tile"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Tema Ocean" loading="lazy" decoding="async" width="1200" height="750"><span>Ocean</span></figure>
-          <figure class="tile"><img src="https://images.unsplash.com/photo-1602526432604-cd3d7f9fcf2e?q=80&w=1200&auto=format&fit=crop" alt="Tema Neon" loading="lazy" decoding="async" width="1200" height="750"><span>Neon</span></figure>
-          <figure class="tile"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Tema Sunset" loading="lazy" decoding="async" width="1200" height="750"><span>Sunset</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=600&auto=format&fit=crop 600w, https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop 1200w" sizes="(max-width: 640px) 100vw, 600px" alt="Tema Aurora" loading="lazy" decoding="async" width="1200" height="750"><span>Aurora</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=600&auto=format&fit=crop 600w, https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop 1200w" sizes="(max-width: 640px) 100vw, 600px" alt="Tema Ocean" loading="lazy" decoding="async" width="1200" height="750"><span>Ocean</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1602526432604-cd3d7f9fcf2e?q=80&w=1200&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1602526432604-cd3d7f9fcf2e?q=80&w=600&auto=format&fit=crop 600w, https://images.unsplash.com/photo-1602526432604-cd3d7f9fcf2e?q=80&w=1200&auto=format&fit=crop 1200w" sizes="(max-width: 640px) 100vw, 600px" alt="Tema Neon" loading="lazy" decoding="async" width="1200" height="750"><span>Neon</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=600&auto=format&fit=crop 600w, https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop 1200w" sizes="(max-width: 640px) 100vw, 600px" alt="Tema Sunset" loading="lazy" decoding="async" width="1200" height="750"><span>Sunset</span></figure>
         </div>
       </div>
     </section>
@@ -142,7 +142,7 @@
           <h2 id="contact-title">Contacto</h2>
           <p>¿Tienes un proyecto? Escríbeme y te contesto pronto.</p>
           <p class="note">Respondo en 24–48 h. Disponible remoto/Barcelona.</p>
-          <div style="margin-top:var(--sm);display:flex;gap:8px;flex-wrap:wrap">
+          <div class="contact-links">
             <a class="btn" href="mailto:tuemail@ejemplo.com">Email</a>
             <a class="btn" href="#">Agenda</a>
             <a class="btn" href="#">WhatsApp</a>
@@ -156,12 +156,13 @@
           <label class="sr-only" for="message">Mensaje</label>
           <textarea id="message" name="message" rows="5" placeholder="Cuéntame sobre tu proyecto" required></textarea>
           <button class="btn primary" type="submit">Enviar</button>
+          <p id="form-status" role="status" class="note"></p>
         </form>
       </div>
     </section>
   </main>
 
-  <footer class="container section" style="text-align:center;opacity:.75">
+  <footer class="container section site-footer">
     © <span id="year"></span> Aldair — Hecho con Liquid Glass
   </footer>
 
