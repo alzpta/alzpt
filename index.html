@@ -27,6 +27,11 @@
       /* Effects */
       --shadow-md:0 10px 34px rgba(0,0,0,.12);
       --shadow-lg:0 16px 60px rgba(0,0,0,.16);
+
+      /* NEW: alturas para offset */
+      --nav-sticky-gap: 16px;          /* separación desde el borde superior */
+      --nav-height: 60px;              /* altura visual del nav */
+      --anchor-offset: calc(var(--nav-height) + var(--nav-sticky-gap) + 12px);
     }
     [data-theme="dark"]{
       --ink:242,246,252; --muted:200,210,230;
@@ -38,11 +43,18 @@
     /* Base */
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:rgb(var(--ink));
-      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));overflow-x:hidden;line-height:1.45}
+    body{
+      margin:0;
+      font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:rgb(var(--ink));
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));
+      overflow-x:hidden; line-height:1.45
+    }
     img{max-width:100%;height:auto}
     .container{width:min(var(--container),92%);margin-inline:auto}
     .section{margin:var(--xl) 0}
+    /* NEW: evita que el nav sticky tape los anclajes */
+    section[id]{scroll-margin-top: var(--anchor-offset)}
     a{color:inherit;text-decoration:none}
     a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid color-mix(in oklab,var(--brand-1),white 20%);outline-offset:2px;border-radius:10px}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -68,15 +80,39 @@
     /* Nav */
     .skip{position:absolute;left:-9999px}
     .skip:focus{left:12px;top:12px;z-index:100;background:#fff;color:#000;padding:6px 10px;border-radius:999px}
-    .nav-wrap{position:sticky;top:12px;z-index:40}
-    nav.glass{display:flex;align-items:center;justify-content:space-between;padding:var(--sm) var(--md);border-radius:18px}
+    .nav-wrap{
+      position:sticky;
+      top: var(--nav-sticky-gap);
+      z-index:40;
+      margin-bottom: var(--md); /* NEW: ritmo uniforme con la primera sección */
+    }
+    nav.glass{
+      display:flex;align-items:center;justify-content:space-between;
+      padding: 8px var(--md); /* altura controlada */
+      border-radius:18px;
+      min-height: var(--nav-height); /* NEW: fija altura para el offset */
+    }
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
     .dot{width:12px;height:12px;border-radius:999px;background:var(--brand-1);box-shadow:0 0 24px var(--brand-1)}
-    .nav-links{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);font-size:var(--fs-2);transition:transform .2s,box-shadow .2s,background .2s}
+    .nav-links{
+      display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+    }
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border-radius:999px;border:1px solid var(--hairline);
+      background:color-mix(in oklab,white 18%,transparent);
+      font-size:var(--fs-2);line-height:1; /* NEW: altura estable */
+      transition:transform .2s,box-shadow .2s,background .2s, border-color .2s;
+    }
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);background:color-mix(in oklab,white 28%,transparent)}
     .btn.primary{border-color:transparent;background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#081019;font-weight:700}
     .btn.ghost{background:transparent}
+
+    /* NEW: estado activo del enlace de nav */
+    .btn.active{
+      border-color: color-mix(in oklab,var(--brand-2),white 10%);
+      box-shadow: 0 0 0 2px color-mix(in oklab,var(--brand-2),white 50%) inset;
+    }
 
     /* Theme toggle */
     .theme-toggle{position:fixed;right:16px;bottom:16px;display:flex;gap:6px;padding:6px;border-radius:14px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);backdrop-filter:blur(10px)}
@@ -132,11 +168,28 @@
     .backtop.show{opacity:1;transform:none}
 
     /* Responsive */
-    @media (max-width:960px){.hero{grid-template-columns:1fr}.card{grid-column:span 6}.contact{grid-template-columns:1fr}.stat{grid-column:span 6}}
-    @media (max-width:640px){.card{grid-column:span 12}.stat{grid-column:span 12}}
+    @media (max-width:960px){
+      .hero{grid-template-columns:1fr}
+      .card{grid-column:span 6}
+      .contact{grid-template-columns:1fr}
+      .stat{grid-column:span 6}
+      /* NEW: el nav separa en dos líneas con orden limpio */
+      nav.glass{gap:8px;flex-wrap:wrap}
+      .brand{order:1}
+      .nav-links{order:2;flex:1}
+    }
+    @media (max-width:640px){
+      .card{grid-column:span 12}
+      .stat{grid-column:span 12}
+    }
 
     /* Reduced motion */
-    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bg{animation:none}.reveal{opacity:1;transform:none}.tile img,.btn{transition:none}}
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .bg{animation:none}
+      .reveal{opacity:1;transform:none}
+      .tile img,.btn{transition:none}
+    }
 
     /* Print */
     @media print{.bg,.noise,.backtop,.nav-wrap,.theme-toggle{display:none!important}.glass{box-shadow:none;border:1px solid #999}}
@@ -307,7 +360,12 @@
     const navLinks = [...document.querySelectorAll('[data-nav]')];
     const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
     const secIO = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ const id = '#' + e.target.id; navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href')===id)); } })
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const id = '#' + e.target.id;
+          navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href')===id));
+        }
+      })
     }, { rootMargin: '0px 0px -70% 0px', threshold: .1 }) : null;
     sections.forEach(s=> secIO?.observe(s));
 
@@ -340,3 +398,4 @@
   </script>
 </body>
 </html>
+
