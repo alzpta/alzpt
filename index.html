@@ -21,6 +21,8 @@
       --container:1140px;         /* ancho máximo del layout general */
       --content: 980px;           /* 🔹 ancho visual igual para nav + secciones */
       --xs:6px; --sm:10px; --md:16px; --lg:24px; --xl:36px; --xxl:56px;
+      /* Gutter lateral compartido (mismo “aire” que el nav) */
+      --gutter-x: 24px; /* súbelo a 32px si quieres más espacio */
       /* Type scale */
       --fs-1:clamp(12px,.82rem,14px); --fs-2:clamp(14px,.95rem,16px);
       --fs-3:clamp(16px,1.05rem,18px); --fs-4:clamp(20px,1.25rem,22px);
@@ -97,7 +99,7 @@
 
     nav.glass{
       display:flex;align-items:center;justify-content:space-between;
-      padding: 8px var(--md);
+      padding: 8px var(--gutter-x);   /* 🔹 usa el mismo gutter que el resto */
       border-radius:18px;
       min-height: var(--nav-height);
       gap:12px;
@@ -117,7 +119,7 @@
     .theme-toggle button[aria-pressed="true"]{outline:2px solid color-mix(in oklab,var(--brand-2),white 20%)}
 
     /* Hero */
-    .hero{padding:var(--lg);display:grid;grid-template-columns:1.15fr 1fr;gap:var(--md);align-items:center}
+    .hero{padding:var(--lg) var(--gutter-x);display:grid;grid-template-columns:1.15fr 1fr;gap:var(--md);align-items:center}
     .hero > div:first-child{min-width:0}
     .avatar{display:grid;place-items:center;padding:var(--md);min-width:0}
     .hero h1{font-size:var(--fs-6);line-height:1.05;margin:0}
@@ -126,7 +128,7 @@
     .avatar img{width:168px;height:168px;border-radius:50%;border:2px solid rgba(255,255,255,.55);box-shadow:0 6px 28px rgba(0,0,0,.12);aspect-ratio:1/1}
 
     /* About */
-    .about{padding:var(--lg);text-align:center}
+    .about{padding:var(--lg) var(--gutter-x);text-align:center}
     .about h2{font-size:var(--fs-5);margin-bottom:var(--xs)}
     .about p{max-width:70ch;margin-inline:auto;color:rgb(var(--muted));font-size:var(--fs-3);line-height:1.7}
     .timeline{margin-top:var(--md);display:grid;gap:var(--sm)}
@@ -134,12 +136,12 @@
     .step .dot{width:10px;height:10px;border-radius:50%;background:var(--brand-2);box-shadow:0 0 14px var(--brand-2);margin-top:8px}
 
     /* Stats strip */
-    .stats{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sm);padding:var(--sm)}
+    .stats{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sm);padding:var(--sm) var(--gutter-x)}
     .stat{grid-column:span 4;padding:var(--md);text-align:center;border-radius:16px;background:color-mix(in oklab,white 22%,transparent);border:1px solid var(--hairline)}
     .stat b{font-size:clamp(18px,4vw,28px)}
 
     /* Projects */
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--md);padding:var(--md)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--md);padding:var(--md) var(--gutter-x)}
     .card{grid-column:span 4;padding:var(--md);border-radius:18px;border:1px solid var(--hairline);background:linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.18));box-shadow:var(--shadow-md)}
     .card h3{margin:2px 0 var(--xs);font-size:var(--fs-4)}
     .card p{color:rgb(var(--muted));font-size:var(--fs-2)}
@@ -147,14 +149,14 @@
     .tag{font-size:.8rem;padding:6px 10px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent)}
 
     /* Gallery */
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--md);padding:var(--md)}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--md);padding:var(--md) var(--gutter-x)}
     .tile{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--hairline)}
     .tile img{width:100%;display:block;transition:transform .5s,box-shadow .5s;aspect-ratio:16/10;object-fit:cover}
     .tile:hover img{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 30px rgba(0,0,0,.14)}
     .tile span{position:absolute;left:10px;bottom:10px;font-size:.78rem;background:color-mix(in oklab,white 22%,transparent);border:1px solid var(--hairline);padding:6px 10px;border-radius:999px}
 
     /* Contact */
-    .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--md);padding:var(--md)}
+    .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--md);padding:var(--md) var(--gutter-x)}
     form{display:grid;gap:var(--sm)}
     input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.9);font-size:var(--fs-2)}
     .note{font-size:var(--fs-1);color:rgb(var(--muted));margin-top:var(--xs)}
@@ -260,7 +262,7 @@
     <!-- PROJECTS -->
     <section id="projects" class="container section reveal" aria-labelledby="projects-title">
       <div class="glass narrow">
-        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
+        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--gutter-x) 0">
           <h2 id="projects-title" style="font-size:var(--fs-5);margin:0">Proyectos</h2>
           <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Selección</span>
         </div>
@@ -290,7 +292,7 @@
     <!-- GALLERY -->
     <section id="galeria" class="container section reveal" aria-labelledby="gallery-title">
       <div class="glass narrow">
-        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
+        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--gutter-x) 0">
           <h2 id="gallery-title" style="font-size:var(--fs-5);margin:0">Galería</h2>
           <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Liquid Glass UI</span>
         </div>
