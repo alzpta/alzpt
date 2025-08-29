@@ -5,143 +5,338 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aldair · Portfolio Liquid Glass</title>
   <meta name="description" content="Portfolio de Aldair Zapata: productos digitales con estética Liquid Glass, accesibles y de alto rendimiento." />
+  <meta name="theme-color" content="#0ea5e9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%2380d8ff'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><circle cx='50' cy='50' r='46' fill='url(%23g)'/><circle cx='50' cy='50' r='26' fill='white' opacity='.65'/></svg>">
   <style>
     :root{
+      /* Color & brand */
       --brand-1:#80d8ff; --brand-2:#a78bfa; --brand-3:#34d399;
       --ink:22,26,32; --muted:86,98,118;
+      /* Glass tokens */
       --glass-bg-1: rgba(128, 216, 255, 0.40);
       --glass-bg-2: rgba(13, 71, 161, 0.18);
       --glass-blur:22px; --glass-radius:24px; --hairline:rgba(255,255,255,.48);
+      /* Layout & rhythm */
       --container:1140px;
       --xs:6px; --sm:10px; --md:16px; --lg:24px; --xl:36px; --xxl:56px;
+      /* Type scale */
       --fs-1:clamp(12px,.82rem,14px); --fs-2:clamp(14px,.95rem,16px);
       --fs-3:clamp(16px,1.05rem,18px); --fs-4:clamp(20px,1.25rem,22px);
       --fs-5:clamp(28px,3.2vw,36px); --fs-6:clamp(36px,6.2vw,56px);
+      /* Effects */
       --shadow-md:0 10px 34px rgba(0,0,0,.12);
       --shadow-lg:0 16px 60px rgba(0,0,0,.16);
     }
-    body{margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      color:rgb(var(--ink));
-      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));
-      overflow-x:hidden;line-height:1.45}
+    [data-theme="dark"]{
+      --ink:242,246,252; --muted:200,210,230;
+      --glass-bg-1: rgba(30,41,59,0.55);
+      --glass-bg-2: rgba(2,6,23,0.42);
+      background-color:#0b1220;
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:rgb(var(--ink));
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));overflow-x:hidden;line-height:1.45}
+    img{max-width:100%;height:auto}
     .container{width:min(var(--container),92%);margin-inline:auto}
     .section{margin:var(--xl) 0}
-    .pad{padding-inline:var(--md)} /* clave para alinear */
+    a{color:inherit;text-decoration:none}
+    a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid color-mix(in oklab,var(--brand-1),white 20%);outline-offset:2px;border-radius:10px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-    .glass{background:linear-gradient(135deg,var(--glass-bg-1),var(--glass-bg-2));
-      border-radius:var(--glass-radius);backdrop-filter:blur(var(--glass-blur)) saturate(120%);
-      box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid rgba(255,255,255,.4)}
+    /* Background: refined liquid + noise */
+    .bg{position:fixed;inset:-20vmax;z-index:-2;filter:blur(58px) saturate(125%);opacity:.7;pointer-events:none;
+      background:
+        radial-gradient(30vw 30vw at 12% 24%, color-mix(in oklab, var(--brand-1) 60%, transparent), transparent 60%),
+        radial-gradient(28vw 28vw at 84% 12%, color-mix(in oklab, var(--brand-2) 50%, transparent), transparent 65%),
+        radial-gradient(24vw 24vw at 64% 84%, rgba(56,189,248,.45), transparent 70%);
+      animation:float 26s ease-in-out infinite alternate}
+    .noise{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.04;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.5"/></svg>')}
+    @keyframes float{from{transform:translate(-1%,-2%) scale(1)}to{transform:translate(1%,2%) scale(1.05)}}
 
-    nav.glass{display:flex;align-items:center;justify-content:space-between;
-      padding:var(--sm) 0;border-radius:18px} /* solo vertical */
+    /* Glass primitives */
+    .glass{position:relative;background:linear-gradient(135deg,var(--glass-bg-1),var(--glass-bg-2));border-radius:var(--glass-radius);
+      -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(120%);backdrop-filter:blur(var(--glass-blur)) saturate(120%);
+      box-shadow:var(--shadow-lg);overflow:clip}
+    .glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(180deg,rgba(255,255,255,.66),rgba(255,255,255,.18));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+    .glass.soft{box-shadow:0 8px 30px rgba(0,0,0,.10)}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent);margin:var(--lg) 0}
 
-    .btn{padding:10px 14px;border-radius:999px;border:1px solid var(--hairline);
-      background:rgba(255,255,255,.2);text-decoration:none;color:inherit}
-    .btn.primary{background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#081019;font-weight:700;border:0}
+    /* Nav */
+    .skip{position:absolute;left:-9999px}
+    .skip:focus{left:12px;top:12px;z-index:100;background:#fff;color:#000;padding:6px 10px;border-radius:999px}
+    .nav-wrap{position:sticky;top:12px;z-index:40}
+    nav.glass{display:flex;align-items:center;justify-content:space-between;padding:var(--sm) var(--md);border-radius:18px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+    .dot{width:12px;height:12px;border-radius:999px;background:var(--brand-1);box-shadow:0 0 24px var(--brand-1)}
+    .nav-links{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);font-size:var(--fs-2);transition:transform .2s,box-shadow .2s,background .2s}
+    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);background:color-mix(in oklab,white 28%,transparent)}
+    .btn.primary{border-color:transparent;background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#081019;font-weight:700}
+    .btn.ghost{background:transparent}
 
-    .hero{padding-block:var(--lg);display:grid;grid-template-columns:1.15fr 1fr;gap:var(--md);align-items:center}
-    .about{padding-block:var(--lg);text-align:center}
-    .stats{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sm);padding-block:var(--sm)}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--md);padding-block:var(--md)}
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--md);padding-block:var(--md)}
-    .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--md);padding-block:var(--md)}
+    /* Theme toggle */
+    .theme-toggle{position:fixed;right:16px;bottom:16px;display:flex;gap:6px;padding:6px;border-radius:14px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);backdrop-filter:blur(10px)}
+    .theme-toggle button{border:0;background:transparent;padding:8px;border-radius:10px;cursor:pointer}
+    .theme-toggle button[aria-pressed="true"]{outline:2px solid color-mix(in oklab,var(--brand-2),white 20%)}
 
-    .card{grid-column:span 4;padding:var(--md);border-radius:18px;border:1px solid var(--hairline);
-      background:rgba(255,255,255,.2)}
+    /* Hero */
+    .hero{padding:var(--lg);display:grid;grid-template-columns:1.15fr 1fr;gap:var(--md);align-items:center}
+    .hero h1{font-size:var(--fs-6);line-height:1.05;margin:0}
+    .hero p{margin-top:var(--sm);font-size:var(--fs-3);color:rgb(var(--muted))}
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:var(--md)}
+    .avatar{display:grid;place-items:center;padding:var(--md)}
+    .avatar img{width:168px;height:168px;border-radius:50%;border:2px solid rgba(255,255,255,.55);box-shadow:0 6px 28px rgba(0,0,0,.12);aspect-ratio:1/1}
+
+    /* About */
+    .about{padding:var(--lg);text-align:center}
+    .about h2{font-size:var(--fs-5);margin-bottom:var(--xs)}
+    .about p{max-width:70ch;margin-inline:auto;color:rgb(var(--muted));font-size:var(--fs-3);line-height:1.7}
+    .timeline{margin-top:var(--md);display:grid;gap:var(--sm)}
+    .step{display:grid;grid-template-columns:28px 1fr;gap:var(--sm);align-items:start}
+    .step .dot{width:10px;height:10px;border-radius:50%;background:var(--brand-2);box-shadow:0 0 14px var(--brand-2);margin-top:8px}
+
+    /* Stats strip */
+    .stats{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sm);padding:var(--sm)}
+    .stat{grid-column:span 4;padding:var(--md);text-align:center;border-radius:16px;background:color-mix(in oklab,white 22%,transparent);border:1px solid var(--hairline)}
+    .stat b{font-size:clamp(18px,4vw,28px)}
+
+    /* Projects */
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--md);padding:var(--md)}
+    .card{grid-column:span 4;padding:var(--md);border-radius:18px;border:1px solid var(--hairline);background:linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.18));box-shadow:var(--shadow-md)}
+    .card h3{margin:2px 0 var(--xs);font-size:var(--fs-4)}
+    .card p{color:rgb(var(--muted));font-size:var(--fs-2)}
+    .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--sm)}
+    .tag{font-size:.8rem;padding:6px 10px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent)}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--md);padding:var(--md)}
+    .tile{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--hairline)}
+    .tile img{width:100%;display:block;transition:transform .5s,box-shadow .5s;aspect-ratio:16/10;object-fit:cover}
+    .tile:hover img{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 30px rgba(0,0,0,.14)}
+    .tile span{position:absolute;left:10px;bottom:10px;font-size:.78rem;background:color-mix(in oklab,white 22%,transparent);border:1px solid var(--hairline);padding:6px 10px;border-radius:999px}
+
+    /* Contact */
+    .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--md);padding:var(--md)}
+    form{display:grid;gap:var(--sm)}
+    input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.9);font-size:var(--fs-2)}
+    .note{font-size:var(--fs-1);color:rgb(var(--muted));margin-top:var(--xs)}
+
+    /* Reveal + back to top */
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}
+    .reveal.in{opacity:1;transform:none}
+    .backtop{position:fixed;right:16px;bottom:16px;padding:10px 12px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent);text-decoration:none;color:inherit;opacity:0;transform:translateY(14px);transition:opacity .3s,transform .3s}
+    .backtop.show{opacity:1;transform:none}
+
+    /* Responsive */
+    @media (max-width:960px){.hero{grid-template-columns:1fr}.card{grid-column:span 6}.contact{grid-template-columns:1fr}.stat{grid-column:span 6}}
+    @media (max-width:640px){.card{grid-column:span 12}.stat{grid-column:span 12}}
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bg{animation:none}.reveal{opacity:1;transform:none}.tile img,.btn{transition:none}}
+
+    /* Print */
+    @media print{.bg,.noise,.backtop,.nav-wrap,.theme-toggle{display:none!important}.glass{box-shadow:none;border:1px solid #999}}
   </style>
 </head>
-<body>
+<body id="top">
+  <a href="#main" class="sr-only skip">Saltar al contenido</a>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- Theme toggle -->
+  <div class="theme-toggle" role="group" aria-label="Cambiar tema">
+    <button id="themeLight" aria-pressed="false" title="Claro">🌤️</button>
+    <button id="themeDark" aria-pressed="false" title="Oscuro">🌙</button>
+    <button id="themeAuto" aria-pressed="true" title="Auto">🪄</button>
+  </div>
+
   <!-- NAV -->
-  <div class="container nav-wrap">
-    <nav class="glass pad">
-      <div class="brand">Aldair</div>
-      <div class="nav-links">
-        <a class="btn" href="#about">Sobre mí</a>
-        <a class="btn" href="#projects">Proyectos</a>
-        <a class="btn" href="#galeria">Galería</a>
-        <a class="btn primary" href="#contacto">Contacto</a>
+  <div class="container nav-wrap reveal">
+    <nav class="glass soft" aria-label="Barra de navegación">
+      <div class="brand"><span class="dot" aria-hidden="true"></span><span>Aldair</span></div>
+      <div class="nav-links" role="navigation">
+        <a class="btn" href="#about" data-nav>Sobre mí</a>
+        <a class="btn" href="#projects" data-nav>Proyectos</a>
+        <a class="btn" href="#galeria" data-nav>Galería</a>
+        <a class="btn primary" href="#contacto" data-nav>Contacto</a>
       </div>
     </nav>
   </div>
 
-  <!-- HERO -->
-  <section class="container section">
-    <div class="glass pad hero">
-      <div>
-        <h1>Hola, soy Aldair</h1>
-        <p>Creo productos digitales con estética Liquid Glass.</p>
+  <main id="main">
+    <!-- HERO -->
+    <section class="container section reveal" aria-labelledby="hero-title">
+      <div class="glass hero">
+        <div>
+          <p style="margin:0 0 var(--xs) 0;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Portfolio</p>
+          <h1 id="hero-title">Hola, soy <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Aldair</span>.</h1>
+          <p>Creo productos digitales con estética <b>Liquid Glass</b>, alto rendimiento y accesibilidad real.</p>
+          <div class="cta">
+            <a class="btn" href="#projects">Ver proyectos</a>
+            <a class="btn" href="#contacto">Hablemos</a>
+          </div>
+        </div>
+        <div class="avatar">
+          <img src="https://via.placeholder.com/320x320.png?text=A" alt="Avatar de Aldair" width="168" height="168" loading="lazy" decoding="async" />
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ABOUT -->
-  <section id="about" class="container section">
-    <div class="glass pad about">
-      <h2>Sobre mí</h2>
-      <p>Ingeniero informático y creador...</p>
-    </div>
-  </section>
+    <!-- ABOUT -->
+    <section id="about" class="container section reveal" aria-labelledby="about-title">
+      <div class="glass about">
+        <h2 id="about-title">Sobre mí</h2>
+        <p>Ingeniero informático y creador. Diseño interfaces con estética Liquid Glass para apps y webs. Me enfoco en accesibilidad, microinteracciones y rendimiento. Trabajo con Firebase, Stripe y PWAs.</p>
+        <div class="timeline" aria-label="Hitos recientes">
+          <div class="step"><span class="dot" aria-hidden="true"></span><div><strong>2025</strong> · CuidApp MVP (Geo + pagos + SOS)</div></div>
+          <div class="step"><span class="dot" style="background:var(--brand-1);box-shadow:0 0 14px var(--brand-1)" aria-hidden="true"></span><div><strong>2024</strong> · Carta Nomo (PWA) con grid 1–100 y panel admin</div></div>
+          <div class="step"><span class="dot" style="background:var(--brand-3);box-shadow:0 0 14px var(--brand-3)" aria-hidden="true"></span><div><strong>2023</strong> · Iberia Sonora – arquitectura musical</div></div>
+        </div>
+      </div>
+    </section>
 
-  <!-- STATS -->
-  <section class="container section">
-    <div class="glass pad">
-      <div class="stats">
-        <div class="card">+20<br><small>Interfaces</small></div>
-        <div class="card">~98<br><small>Lighthouse</small></div>
-        <div class="card">AA<br><small>Accesibilidad</small></div>
+    <!-- STATS STRIP -->
+    <section class="container section reveal">
+      <div class="glass soft">
+        <div class="stats">
+          <div class="stat"><b>+20</b><br><small>Interfaces entregadas</small></div>
+          <div class="stat"><b>~98</b><br><small>Score Lighthouse</small></div>
+          <div class="stat"><b>AA</b><br><small>Accesibilidad WCAG</small></div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PROJECTS -->
-  <section id="projects" class="container section">
-    <div class="glass pad">
-      <div style="display:flex;justify-content:space-between;align-items:end;padding:var(--sm) 0 0">
-        <h2>Proyectos</h2><span>Selección</span>
+    <!-- PROJECTS -->
+    <section id="projects" class="container section reveal" aria-labelledby="projects-title">
+      <div class="glass">
+        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
+          <h2 id="projects-title" style="font-size:var(--fs-5);margin:0">Proyectos</h2>
+          <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Selección</span>
+        </div>
+        <div class="grid">
+          <article class="card" aria-labelledby="p1-title">
+            <h3 id="p1-title">CuidApp</h3>
+            <p>Familias ↔ cuidadores verificados. Geo, agenda, Stripe Connect, SOS.</p>
+            <div class="tags"><span class="tag">PWA</span><span class="tag">Firebase</span><span class="tag">Stripe</span></div>
+            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Demo</a><a class="btn ghost" href="#">Código</a></div>
+          </article>
+          <article class="card" aria-labelledby="p2-title">
+            <h3 id="p2-title">Carta Nomo</h3>
+            <p>Carta digital con Liquid Glass, grid 1–100, voz e imágenes optimizadas.</p>
+            <div class="tags"><span class="tag">PWA</span><span class="tag">A11y</span><span class="tag">Performance</span></div>
+            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Demo</a><a class="btn ghost" href="#">Código</a></div>
+          </article>
+          <article class="card" aria-labelledby="p3-title">
+            <h3 id="p3-title">Iberia Sonora</h3>
+            <p>Estudio de arquitectura musical: lanzamientos, ambient y experiencias.</p>
+            <div class="tags"><span class="tag">Audio</span><span class="tag">Branding</span></div>
+            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Escuchar</a><a class="btn ghost" href="#">Press Kit</a></div>
+          </article>
+        </div>
       </div>
-      <div class="grid">
-        <div class="card">Proyecto 1</div>
-        <div class="card">Proyecto 2</div>
-        <div class="card">Proyecto 3</div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- GALLERY -->
-  <section id="galeria" class="container section">
-    <div class="glass pad">
-      <div style="display:flex;justify-content:space-between;align-items:end;padding:var(--sm) 0 0">
-        <h2>Galería</h2><span>Liquid Glass UI</span>
+    <!-- GALLERY -->
+    <section id="galeria" class="container section reveal" aria-labelledby="gallery-title">
+      <div class="glass">
+        <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
+          <h2 id="gallery-title" style="font-size:var(--fs-5);margin:0">Galería</h2>
+          <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Liquid Glass UI</span>
+        </div>
+        <div class="gallery">
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="Tema Aurora" loading="lazy" decoding="async" width="1200" height="750"><span>Aurora</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Tema Ocean" loading="lazy" decoding="async" width="1200" height="750"><span>Ocean</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1602526432604-cd3d7f9fcf2e?q=80&w=1200&auto=format&fit=crop" alt="Tema Neon" loading="lazy" decoding="async" width="1200" height="750"><span>Neon</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Tema Sunset" loading="lazy" decoding="async" width="1200" height="750"><span>Sunset</span></figure>
+        </div>
       </div>
-      <div class="gallery">
-        <div class="card">Imagen 1</div>
-        <div class="card">Imagen 2</div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONTACT -->
-  <section id="contacto" class="container section">
-    <div class="glass pad contact">
-      <div>
-        <h2>Contacto</h2>
-        <p>Escríbeme para proyectos.</p>
+    <!-- CONTACT -->
+    <section id="contacto" class="container section reveal" aria-labelledby="contact-title">
+      <div class="glass contact">
+        <div>
+          <h2 id="contact-title">Contacto</h2>
+          <p>¿Tienes un proyecto? Escríbeme y te contesto pronto.</p>
+          <p class="note">Respondo en 24–48 h. Disponible remoto/Barcelona.</p>
+          <div style="margin-top:var(--sm);display:flex;gap:8px;flex-wrap:wrap">
+            <a class="btn" href="mailto:tuemail@ejemplo.com">Email</a>
+            <a class="btn" href="#">Agenda</a>
+            <a class="btn" href="#">WhatsApp</a>
+          </div>
+        </div>
+        <form id="contact-form" novalidate>
+          <label class="sr-only" for="name">Nombre</label>
+          <input id="name" type="text" name="name" placeholder="Tu nombre" required>
+          <label class="sr-only" for="email">Email</label>
+          <input id="email" type="email" name="email" placeholder="Tu email" required>
+          <label class="sr-only" for="message">Mensaje</label>
+          <textarea id="message" name="message" rows="5" placeholder="Cuéntame sobre tu proyecto" required></textarea>
+          <button class="btn primary" type="submit">Enviar</button>
+        </form>
       </div>
-      <form>
-        <input type="text" placeholder="Tu nombre">
-        <input type="email" placeholder="Tu email">
-        <textarea placeholder="Tu mensaje"></textarea>
-        <button class="btn primary" type="submit">Enviar</button>
-      </form>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <footer class="container section" style="text-align:center;opacity:.7">
-    © <span id="year"></span> Aldair
+  <footer class="container section" style="text-align:center;opacity:.75">
+    © <span id="year"></span> Aldair — Hecho con Liquid Glass
   </footer>
 
-  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+  <a href="#top" class="backtop" id="backtop" aria-label="Volver arriba">↑</a>
+
+  <script>
+    // Año
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target) } })
+    }, { threshold: .12 }) : null;
+    document.querySelectorAll('.reveal').forEach(el=> io?.observe(el));
+
+    // Back-to-top
+    const bt = document.getElementById('backtop');
+    const onScroll = ()=>{ if(window.scrollY > 420){ bt.classList.add('show') } else { bt.classList.remove('show') } };
+    document.addEventListener('scroll', onScroll, { passive: true });
+
+    // Nav active state
+    const navLinks = [...document.querySelectorAll('[data-nav]')];
+    const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const secIO = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ const id = '#' + e.target.id; navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href')===id)); } })
+    }, { rootMargin: '0px 0px -70% 0px', threshold: .1 }) : null;
+    sections.forEach(s=> secIO?.observe(s));
+
+    // Form validation (mock)
+    const form = document.getElementById('contact-form');
+    form?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      if(!form.checkValidity()){ form.reportValidity(); return }
+      const data = Object.fromEntries(new FormData(form).entries());
+      console.log('Contacto:', data); // integrar con endpoint real
+      form.reset();
+      alert('¡Gracias! Te responderé pronto.');
+    });
+
+    // Theme toggle (light/dark/auto)
+    const root = document.documentElement; const LS_KEY = 'lg-theme-mode';
+    const setMode = (m)=>{
+      localStorage.setItem(LS_KEY, m);
+      document.getElementById('themeLight').setAttribute('aria-pressed', m==='light');
+      document.getElementById('themeDark').setAttribute('aria-pressed', m==='dark');
+      document.getElementById('themeAuto').setAttribute('aria-pressed', m==='auto');
+      if(m==='light'){ root.removeAttribute('data-theme'); }
+      else if(m==='dark'){ root.setAttribute('data-theme','dark'); }
+      else{ root.removeAttribute('data-theme'); }
+    }
+    document.getElementById('themeLight').onclick=()=>setMode('light');
+    document.getElementById('themeDark').onclick=()=>setMode('dark');
+    document.getElementById('themeAuto').onclick=()=>setMode('auto');
+    try{ setMode(localStorage.getItem(LS_KEY) || 'auto') }catch(e){}
+  </script>
 </body>
 </html>
-
-
