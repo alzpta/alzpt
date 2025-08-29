@@ -1,7 +1,7 @@
 :root {
   --primary: rgba(255, 255, 255, 0.25);
-  --bg-start: rgba(255, 255, 255, 0.4);
-  --bg-end: rgba(255, 255, 255, 0.15);
+  --bg-start: rgba(128, 216, 255, 0.4);
+  --bg-end: rgba(13, 71, 161, 0.15);
   --text-color: rgba(30, 30, 30, 0.85);
 }
 
@@ -19,13 +19,26 @@ body {
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   margin: 20px;
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.6), transparent 70%);
+  pointer-events: none;
 }
 
 header {
