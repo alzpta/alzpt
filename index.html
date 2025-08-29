@@ -4,88 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Landing Personal · Liquid Glass</title>
-  <style>
-    :root {
-      --primary: rgba(255, 255, 255, 0.25);
-      --bg-start: rgba(128, 216, 255, 0.4);
-      --bg-end: rgba(13, 71, 161, 0.15);
-      --text-color: rgba(30, 30, 30, 0.92);
-      --radius-lg: 20px;
-      --radius-md: 12px;
-      --maxw: 1100px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      color: var(--text-color);
-      background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.65));
-      overflow-x: hidden;
-    }
-
-    .container { width: min(var(--maxw), 92%); margin-inline: auto; }
-
-    /* NAV */
-    .nav-wrap { position: sticky; top: 12px; z-index: 20; }
-    nav.glass { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; }
-    .brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px }
-    .brand .dot { width:12px; height:12px; border-radius:999px; background: rgba(255,255,255,.7); box-shadow:0 0 20px rgba(255,255,255,.6) }
-    .nav-links { display:flex; gap:8px; align-items:center; flex-wrap:wrap }
-    .btn { padding:10px 14px; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,0.4); background: var(--primary); cursor:pointer; text-decoration:none; color:inherit; transition: background .25s, box-shadow .25s }
-    .btn:hover { background: rgba(255,255,255,.35); box-shadow: 0 6px 20px rgba(255,255,255,.35) }
-
-    /* GLASS CORE */
-    .glass { position: relative; background: linear-gradient(135deg, var(--bg-start), var(--bg-end)); border: 1px solid rgba(255, 255, 255, 0.35); border-radius: var(--radius-lg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); overflow: hidden; }
-    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .glass { background: rgba(255,255,255,.95) } }
-    .glass::before { content:""; position:absolute; top:-10%; left:-10%; width:120%; height:120%; background: radial-gradient(circle at top left, rgba(255,255,255,.6), transparent 70%); pointer-events:none }
-
-    /* HERO */
-    header.hero { display:grid; grid-template-columns: 1.2fr 1fr; gap:18px; align-items:center; padding:32px; }
-    header.hero .intro h1 { font-size: clamp(28px, 6vw, 54px); line-height:1.06 }
-    header.hero .intro p { margin-top: 10px; font-size: 1.05rem; opacity: .9 }
-    header.hero .cta { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px }
-    .avatar { display:grid; place-items:center; padding:18px }
-    .avatar img { width: 140px; height: 140px; border-radius: 50%; border: 2px solid rgba(255,255,255,.5); box-shadow: 0 4px 20px rgba(0,0,0,.12) }
-
-    /* ABOUT */
-    .section { margin: 28px 0 }
-    .about { padding: 28px; text-align:center }
-    .about h2 { font-size: 1.9rem; margin-bottom: 8px }
-    .about p { opacity:.9; line-height:1.6 }
-
-    /* PROJECTS */
-    .projects-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 18px 20px }
-    .grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 12px; padding: 16px }
-    .card { grid-column: span 4; padding:16px; border-radius: var(--radius-md); border:1px solid rgba(255,255,255,.35); background: linear-gradient(135deg, rgba(255,255,255,.25), rgba(255,255,255,.18)); box-shadow: 0 6px 22px rgba(0,0,0,.08) }
-    .card h3 { margin: 6px 0 6px; font-size: 1.1rem }
-    .card p { font-size: .95rem; opacity:.9 }
-    .chip { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.4); background: var(--primary); font-size:.8rem }
-    .card .actions { display:flex; gap:8px; margin-top:12px }
-
-    /* GALLERY */
-    .gallery { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; padding: 16px }
-    .tile { position:relative; border-radius: var(--radius-md); overflow:hidden; border:1px solid rgba(255,255,255,.35) }
-    .tile img { width:100%; display:block; transition: transform .6s, box-shadow .6s }
-    .tile:hover img { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,.15) }
-    .tile span { position:absolute; left:10px; bottom:10px; font-size:.8rem; background: var(--primary); border:1px solid rgba(255,255,255,.4); padding:6px 10px; border-radius:999px }
-
-    /* CONTACT */
-    .contact { display:grid; grid-template-columns: 1.1fr 1fr; gap:14px; padding: 18px }
-    form { display:grid; gap:10px }
-    input, textarea { width:100%; padding:12px 14px; border-radius: var(--radius-md); border:1px solid rgba(0,0,0,.12); background: rgba(255,255,255,.85) }
-
-    /* SOCIALS */
-    .socials { display:flex; gap:10px; flex-wrap:wrap }
-    .icon-btn { display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.4); background: var(--primary); text-decoration:none; color:inherit }
-    .icon { width:18px; height:18px; display:inline-block }
-
-    footer { text-align:center; padding: 16px; opacity: .75 }
-
-    /* RESPONSIVE */
-    @media (max-width: 960px){ header.hero{ grid-template-columns: 1fr } .card{ grid-column: span 6 } .contact{ grid-template-columns:1fr } }
-    @media (max-width: 640px){ .card{ grid-column: span 12 } }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <!-- NAV -->
@@ -222,18 +141,7 @@
     © <span id="year"></span> Tu Nombre — Hecho con Liquid Glass
   </footer>
 
-  <script>
-    // Año
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Scroll suave
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const el = document.querySelector(a.getAttribute('href'));
-        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}) }
-      })
-    })
-  </script>
+    <script src="main.js"></script>
 </body>
 </html>
 
