@@ -28,10 +28,10 @@
       --shadow-md:0 10px 34px rgba(0,0,0,.12);
       --shadow-lg:0 16px 60px rgba(0,0,0,.16);
 
-      /* NEW: alturas para offset */
-      --nav-sticky-gap: 16px;          /* separación desde el borde superior */
-      --nav-height: 60px;              /* altura visual del nav */
-      --anchor-offset: calc(var(--nav-height) + var(--nav-sticky-gap) + 12px);
+      /* Sticky nav + anchor offset */
+      --nav-sticky-gap: 16px;
+      --nav-height: 60px;
+      --anchor-offset: calc(var(--nav-height) + var(--nav-sticky-gap) + 16px);
     }
     [data-theme="dark"]{
       --ink:242,246,252; --muted:200,210,230;
@@ -43,17 +43,12 @@
     /* Base */
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      color:rgb(var(--ink));
-      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));
-      overflow-x:hidden; line-height:1.45
-    }
+    body{margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:rgb(var(--ink));
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));overflow-x:hidden;line-height:1.45}
     img{max-width:100%;height:auto}
     .container{width:min(var(--container),92%);margin-inline:auto}
     .section{margin:var(--xl) 0}
-    /* NEW: evita que el nav sticky tape los anclajes */
+    /* Evita que el nav tape los anclajes */
     section[id]{scroll-margin-top: var(--anchor-offset)}
     a{color:inherit;text-decoration:none}
     a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid color-mix(in oklab,var(--brand-1),white 20%);outline-offset:2px;border-radius:10px}
@@ -80,39 +75,31 @@
     /* Nav */
     .skip{position:absolute;left:-9999px}
     .skip:focus{left:12px;top:12px;z-index:100;background:#fff;color:#000;padding:6px 10px;border-radius:999px}
+
     .nav-wrap{
       position:sticky;
       top: var(--nav-sticky-gap);
       z-index:40;
-      margin-bottom: var(--md); /* NEW: ritmo uniforme con la primera sección */
+      margin-bottom: var(--md);
     }
+    /* fuerza a que el nav ocupe el ancho útil (fix Safari/Chrome) */
+    .container.nav-wrap > nav.glass{ width:100%; }
+
     nav.glass{
       display:flex;align-items:center;justify-content:space-between;
-      padding: 8px var(--md); /* altura controlada */
+      padding: 8px var(--md);
       border-radius:18px;
-      min-height: var(--nav-height); /* NEW: fija altura para el offset */
+      min-height: var(--nav-height);
+      gap:12px;
     }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px;flex:0 0 auto}
     .dot{width:12px;height:12px;border-radius:999px;background:var(--brand-1);box-shadow:0 0 24px var(--brand-1)}
-    .nav-links{
-      display:flex;gap:8px;flex-wrap:wrap;align-items:center;
-    }
-    .btn{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 14px;border-radius:999px;border:1px solid var(--hairline);
-      background:color-mix(in oklab,white 18%,transparent);
-      font-size:var(--fs-2);line-height:1; /* NEW: altura estable */
-      transition:transform .2s,box-shadow .2s,background .2s, border-color .2s;
-    }
+    .nav-links{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end;flex:1 1 auto}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);font-size:var(--fs-2);line-height:1;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);background:color-mix(in oklab,white 28%,transparent)}
     .btn.primary{border-color:transparent;background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#081019;font-weight:700}
     .btn.ghost{background:transparent}
-
-    /* NEW: estado activo del enlace de nav */
-    .btn.active{
-      border-color: color-mix(in oklab,var(--brand-2),white 10%);
-      box-shadow: 0 0 0 2px color-mix(in oklab,var(--brand-2),white 50%) inset;
-    }
+    .btn.active{border-color: color-mix(in oklab,var(--brand-2),white 15%);box-shadow: 0 0 0 2px color-mix(in oklab,var(--brand-2),white 55%) inset}
 
     /* Theme toggle */
     .theme-toggle{position:fixed;right:16px;bottom:16px;display:flex;gap:6px;padding:6px;border-radius:14px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);backdrop-filter:blur(10px)}
@@ -121,10 +108,11 @@
 
     /* Hero */
     .hero{padding:var(--lg);display:grid;grid-template-columns:1.15fr 1fr;gap:var(--md);align-items:center}
+    .hero > div:first-child{min-width:0}
+    .avatar{display:grid;place-items:center;padding:var(--md);min-width:0}
     .hero h1{font-size:var(--fs-6);line-height:1.05;margin:0}
     .hero p{margin-top:var(--sm);font-size:var(--fs-3);color:rgb(var(--muted))}
     .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:var(--md)}
-    .avatar{display:grid;place-items:center;padding:var(--md)}
     .avatar img{width:168px;height:168px;border-radius:50%;border:2px solid rgba(255,255,255,.55);box-shadow:0 6px 28px rgba(0,0,0,.12);aspect-ratio:1/1}
 
     /* About */
@@ -173,7 +161,6 @@
       .card{grid-column:span 6}
       .contact{grid-template-columns:1fr}
       .stat{grid-column:span 6}
-      /* NEW: el nav separa en dos líneas con orden limpio */
       nav.glass{gap:8px;flex-wrap:wrap}
       .brand{order:1}
       .nav-links{order:2;flex:1}
@@ -184,12 +171,7 @@
     }
 
     /* Reduced motion */
-    @media (prefers-reduced-motion:reduce){
-      html{scroll-behavior:auto}
-      .bg{animation:none}
-      .reveal{opacity:1;transform:none}
-      .tile img,.btn{transition:none}
-    }
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bg{animation:none}.reveal{opacity:1;transform:none}.tile img,.btn{transition:none}}
 
     /* Print */
     @media print{.bg,.noise,.backtop,.nav-wrap,.theme-toggle{display:none!important}.glass{box-shadow:none;border:1px solid #999}}
@@ -234,7 +216,9 @@
           </div>
         </div>
         <div class="avatar">
-          <img src="https://via.placeholder.com/320x320.png?text=A" alt="Avatar de Aldair" width="168" height="168" loading="lazy" decoding="async" />
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%2380d8ff'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><circle cx='100' cy='100' r='96' fill='url(%23g)'/><circle cx='100' cy='75' r='38' fill='white' opacity='.65'/><rect x='42' y='118' width='116' height='48' rx='24' fill='white' opacity='.45'/></svg>"
+            alt="Avatar de Aldair" width="168" height="168" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
