@@ -18,7 +18,8 @@
       --glass-bg-2: rgba(13, 71, 161, 0.18);
       --glass-blur:22px; --glass-radius:24px; --hairline:rgba(255,255,255,.48);
       /* Layout & rhythm */
-      --container:1140px;
+      --container:1140px;         /* ancho máximo del layout general */
+      --content: 980px;           /* 🔹 ancho visual igual para nav + secciones */
       --xs:6px; --sm:10px; --md:16px; --lg:24px; --xl:36px; --xxl:56px;
       /* Type scale */
       --fs-1:clamp(12px,.82rem,14px); --fs-2:clamp(14px,.95rem,16px);
@@ -43,11 +44,17 @@
     /* Base */
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:rgb(var(--ink));
-      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));overflow-x:hidden;line-height:1.45}
+    body{
+      margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:rgb(var(--ink));
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));
+      overflow-x:hidden;line-height:1.45
+    }
     img{max-width:100%;height:auto}
     .container{width:min(var(--container),92%);margin-inline:auto}
     .section{margin:var(--xl) 0}
+    /* 🔹 Utilidad para igualar ancho de nav y secciones */
+    .narrow{ width:min(var(--content), 100%); margin-inline:auto; }
+
     /* Evita que el nav tape los anclajes */
     section[id]{scroll-margin-top: var(--anchor-offset)}
     a{color:inherit;text-decoration:none}
@@ -82,12 +89,11 @@
       z-index:40;
       margin-bottom: var(--md);
     }
-    /* fuerza a que el nav ocupe el ancho útil (fix Safari/Chrome) */
-.container.nav-wrap > nav.glass{ 
-  width:100%; 
-}
-
-
+    /* 🔹 Nav centrado y con el mismo ancho visual que las secciones */
+    .container.nav-wrap > nav.glass{
+      width:min(var(--content), 100%);
+      margin-inline:auto;
+    }
 
     nav.glass{
       display:flex;align-items:center;justify-content:space-between;
@@ -195,7 +201,7 @@
 
   <!-- NAV -->
   <div class="container nav-wrap reveal">
-    <nav class="glass soft" aria-label="Barra de navegación">
+    <nav class="glass soft narrow" aria-label="Barra de navegación">
       <div class="brand"><span class="dot" aria-hidden="true"></span><span>Aldair</span></div>
       <div class="nav-links" role="navigation">
         <a class="btn" href="#about" data-nav>Sobre mí</a>
@@ -209,7 +215,7 @@
   <main id="main">
     <!-- HERO -->
     <section class="container section reveal" aria-labelledby="hero-title">
-      <div class="glass hero">
+      <div class="glass hero narrow">
         <div>
           <p style="margin:0 0 var(--xs) 0;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Portfolio</p>
           <h1 id="hero-title">Hola, soy <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Aldair</span>.</h1>
@@ -229,7 +235,7 @@
 
     <!-- ABOUT -->
     <section id="about" class="container section reveal" aria-labelledby="about-title">
-      <div class="glass about">
+      <div class="glass about narrow">
         <h2 id="about-title">Sobre mí</h2>
         <p>Ingeniero informático y creador. Diseño interfaces con estética Liquid Glass para apps y webs. Me enfoco en accesibilidad, microinteracciones y rendimiento. Trabajo con Firebase, Stripe y PWAs.</p>
         <div class="timeline" aria-label="Hitos recientes">
@@ -242,7 +248,7 @@
 
     <!-- STATS STRIP -->
     <section class="container section reveal">
-      <div class="glass soft">
+      <div class="glass soft narrow">
         <div class="stats">
           <div class="stat"><b>+20</b><br><small>Interfaces entregadas</small></div>
           <div class="stat"><b>~98</b><br><small>Score Lighthouse</small></div>
@@ -253,7 +259,7 @@
 
     <!-- PROJECTS -->
     <section id="projects" class="container section reveal" aria-labelledby="projects-title">
-      <div class="glass">
+      <div class="glass narrow">
         <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
           <h2 id="projects-title" style="font-size:var(--fs-5);margin:0">Proyectos</h2>
           <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Selección</span>
@@ -283,7 +289,7 @@
 
     <!-- GALLERY -->
     <section id="galeria" class="container section reveal" aria-labelledby="gallery-title">
-      <div class="glass">
+      <div class="glass narrow">
         <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
           <h2 id="gallery-title" style="font-size:var(--fs-5);margin:0">Galería</h2>
           <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Liquid Glass UI</span>
@@ -299,7 +305,7 @@
 
     <!-- CONTACT -->
     <section id="contacto" class="container section reveal" aria-labelledby="contact-title">
-      <div class="glass contact">
+      <div class="glass contact narrow">
         <div>
           <h2 id="contact-title">Contacto</h2>
           <p>¿Tienes un proyecto? Escríbeme y te contesto pronto.</p>
@@ -386,4 +392,3 @@
   </script>
 </body>
 </html>
-
