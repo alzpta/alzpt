@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Suscripción al boletín</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    #message { margin-top: 1rem; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button id="cta">Suscríbete ahora</button>
 
+  <section id="subscription" style="margin-top:2rem;">
+    <h1>Suscríbete a nuestro boletín</h1>
+    <form id="newsletter-form">
+      <input type="email" id="email" placeholder="Tu correo electrónico" required>
+      <button type="submit" id="subscribe-btn">Suscribirse</button>
+    </form>
+    <p id="message"></p>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
