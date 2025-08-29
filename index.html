@@ -3,28 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aldair · Portfolio Liquid Glass</title>
+  <title>Aldair · Portfolio Liquid Glass · Pro</title>
   <meta name="description" content="Portfolio de Aldair Zapata: productos digitales con estética Liquid Glass, accesibles y de alto rendimiento." />
   <meta name="theme-color" content="#0ea5e9" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%2380d8ff'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><circle cx='50' cy='50' r='46' fill='url(%23g)'/><circle cx='50' cy='50' r='26' fill='white' opacity='.65'/></svg>">
   <style>
     :root{
-      /* Color & brand */
       --brand-1:#80d8ff; --brand-2:#a78bfa; --brand-3:#34d399;
       --ink:22,26,32; --muted:86,98,118;
-      /* Glass tokens */
+
       --glass-bg-1: rgba(128, 216, 255, 0.40);
       --glass-bg-2: rgba(13, 71, 161, 0.18);
       --glass-blur:22px; --glass-radius:24px; --hairline:rgba(255,255,255,.48);
-      /* Layout & rhythm */
+
       --container:1140px;
       --xs:6px; --sm:10px; --md:16px; --lg:24px; --xl:36px; --xxl:56px;
-      /* Type scale */
+
       --fs-1:clamp(12px,.82rem,14px); --fs-2:clamp(14px,.95rem,16px);
       --fs-3:clamp(16px,1.05rem,18px); --fs-4:clamp(20px,1.25rem,22px);
       --fs-5:clamp(28px,3.2vw,36px); --fs-6:clamp(36px,6.2vw,56px);
-      /* Effects */
+
       --shadow-md:0 10px 34px rgba(0,0,0,.12);
       --shadow-lg:0 16px 60px rgba(0,0,0,.16);
     }
@@ -35,11 +34,16 @@
       background-color:#0b1220;
     }
 
-    /* Base */
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:rgb(var(--ink));
-      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));overflow-x:hidden;line-height:1.45}
+    body{
+      margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:rgb(var(--ink));
+      background:
+        radial-gradient(60vw 40vw at 10% -10%, rgba(128,216,255,.18), transparent 60%),
+        radial-gradient(50vw 40vw at 110% 0%, rgba(167,139,250,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,248,255,.78));
+      overflow-x:hidden;line-height:1.45
+    }
     img{max-width:100%;height:auto}
     .container{width:min(var(--container),92%);margin-inline:auto}
     .section{margin:var(--xl) 0}
@@ -47,118 +51,97 @@
     a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid color-mix(in oklab,var(--brand-1),white 20%);outline-offset:2px;border-radius:10px}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-    /* Background: refined liquid + noise */
-    .bg{position:fixed;inset:-20vmax;z-index:-2;filter:blur(58px) saturate(125%);opacity:.7;pointer-events:none;
-      background:
-        radial-gradient(30vw 30vw at 12% 24%, color-mix(in oklab, var(--brand-1) 60%, transparent), transparent 60%),
-        radial-gradient(28vw 28vw at 84% 12%, color-mix(in oklab, var(--brand-2) 50%, transparent), transparent 65%),
-        radial-gradient(24vw 24vw at 64% 84%, rgba(56,189,248,.45), transparent 70%);
-      animation:float 26s ease-in-out infinite alternate}
+    /* Liquid background helpers */
     .noise{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.04;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.5"/></svg>')}
-    @keyframes float{from{transform:translate(-1%,-2%) scale(1)}to{transform:translate(1%,2%) scale(1.05)}}
 
     /* Glass primitives */
-    .glass{position:relative;background:linear-gradient(135deg,var(--glass-bg-1),var(--glass-bg-2));border-radius:var(--glass-radius);
-      -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(120%);backdrop-filter:blur(var(--glass-blur)) saturate(120%);
-      box-shadow:var(--shadow-lg);overflow:clip}
-    .glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(180deg,rgba(255,255,255,.66),rgba(255,255,255,.18));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+    .glass{
+      position:relative;
+      background:linear-gradient(135deg,var(--glass-bg-1),var(--glass-bg-2));
+      border-radius:var(--glass-radius);
+      -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(120%);
+      backdrop-filter:blur(var(--glass-blur)) saturate(120%);
+      box-shadow:var(--shadow-lg);overflow:clip
+    }
+    .glass::before{
+      content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+      background:linear-gradient(180deg,rgba(255,255,255,.66),rgba(255,255,255,.18));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude
+    }
     .glass.soft{box-shadow:0 8px 30px rgba(0,0,0,.10)}
-    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent);margin:var(--lg) 0}
 
-    /* Nav */
-    .skip{position:absolute;left:-9999px}
-    .skip:focus{left:12px;top:12px;z-index:100;background:#fff;color:#000;padding:6px 10px;border-radius:999px}
+    /* NAV */
     .nav-wrap{position:sticky;top:12px;z-index:40}
-    nav.glass{display:flex;align-items:center;justify-content:space-between;padding:var(--sm) var(--md);border-radius:18px}
+    nav.glass{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px var(--md);border-radius:18px
+    }
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
     .dot{width:12px;height:12px;border-radius:999px;background:var(--brand-1);box-shadow:0 0 24px var(--brand-1)}
     .nav-links{display:flex;gap:8px;flex-wrap:wrap}
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);font-size:var(--fs-2);transition:transform .2s,box-shadow .2s,background .2s}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);background:color-mix(in oklab,white 28%,transparent)}
     .btn.primary{border-color:transparent;background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#081019;font-weight:700}
-    .btn.ghost{background:transparent}
+    .tag{font-size:.78rem;padding:6px 10px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent)}
 
-    /* Theme toggle */
-    .theme-toggle{position:fixed;right:16px;bottom:16px;display:flex;gap:6px;padding:6px;border-radius:14px;border:1px solid var(--hairline);background:color-mix(in oklab,white 18%,transparent);backdrop-filter:blur(10px)}
-    .theme-toggle button{border:0;background:transparent;padding:8px;border-radius:10px;cursor:pointer}
-    .theme-toggle button[aria-pressed="true"]{outline:2px solid color-mix(in oklab,var(--brand-2),white 20%)}
-
-    /* Hero (por defecto, no full) */
-    .hero{padding:var(--lg);display:grid;grid-template-columns:1.15fr 1fr;gap:var(--md);align-items:center}
-    .hero h1{font-size:var(--fs-6);line-height:1.05;margin:0}
-    .hero p{margin-top:var(--sm);font-size:var(--fs-3);color:rgb(var(--muted))}
-    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:var(--md)}
-    .avatar{display:grid;place-items:center;padding:var(--md)}
-    .avatar img{width:168px;height:168px;border-radius:50%;border:2px solid rgba(255,255,255,.55);box-shadow:0 6px 28px rgba(0,0,0,.12);aspect-ratio:1/1}
-
-    /* === Hero a pantalla completa con imagen difusa === */
-    .hero.bg-image{
-      min-height:100svh;
+    /* === HERO · Glass Banner con halo y chips === */
+    .hero-pro{
       position:relative;
-      display:grid;
-      place-items:center;
-      padding:calc(var(--xl) + 20px) var(--lg);
-      border-radius:var(--glass-radius);
-      overflow:hidden;
+      padding: clamp(28px, 4vw, 40px);
+      display:grid;grid-template-columns:1.2fr .9fr;gap: clamp(16px, 3.2vw, 28px);align-items:center
     }
-    .hero.bg-image .bg-img{
-      position:absolute;inset:0;
-      background-size:cover;background-position:center;background-repeat:no-repeat;
-      filter:blur(18px) saturate(115%);
-      transform:scale(1.06);
-      z-index:-2;
+    .hero-pro .halo{
+      position:absolute;inset:-20%;
+      background:
+        radial-gradient(40% 40% at 15% 35%, rgba(128,216,255,.25), transparent 60%),
+        radial-gradient(45% 45% at 85% 25%, rgba(167,139,250,.22), transparent 65%),
+        radial-gradient(35% 35% at 55% 85%, rgba(52,211,153,.18), transparent 70%);
+      filter:blur(40px) saturate(120%);z-index:-1
     }
-    .hero.bg-image .bg-shade{
-      position:absolute;inset:0;
-      background:linear-gradient(180deg, rgba(2,6,23,.65), rgba(2,6,23,.35) 35%, rgba(2,6,23,.65));
-      z-index:-1;
+    .hero-pro h1{font-size:clamp(36px,6.2vw,56px);line-height:1.05;margin:0}
+    .hero-pro h1 .grad{
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent
     }
-    .hero.bg-image .center{
-      width:min(var(--container),92%);
-      margin-inline:auto;
-      display:grid;gap:18px;justify-items:center;text-align:center;
-      color:#fff;
+    .hero-pro p{margin:var(--sm) 0 0 0;color:rgb(var(--muted));font-size:var(--fs-3)}
+    .hero-pro .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:var(--md)}
+    .hero-pro .right{
+      display:grid;gap:12px;align-content:center;justify-items:center
     }
-    .hero.bg-image .center h1{
-      font-size:clamp(36px,6.5vw,64px);line-height:1.05;margin:0;
-      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
-      -webkit-background-clip:text;background-clip:text;color:transparent;
+    .avatar-card{
+      width:min(360px,100%);padding:18px;border-radius:18px;text-align:center;
+      background:linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.16));
+      border:1px solid var(--hairline)
     }
-    .hero.bg-image .center p{max-width:70ch;color:rgba(255,255,255,.9);font-size:var(--fs-3)}
-    .hero.bg-image .center .cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    .hero.bg-image .center .glass{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.08));box-shadow:0 16px 60px rgba(0,0,0,.28);padding:var(--lg);border:1px solid rgba(255,255,255,.35)}
-    .scrolldown{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);padding:8px 12px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent);text-decoration:none;opacity:.85;color:#fff}
-    .scrolldown:hover{opacity:1;box-shadow:var(--shadow-md)}
+    .avatar-card img{width:132px;height:132px;border-radius:50%;border:2px solid rgba(255,255,255,.55);box-shadow:0 6px 28px rgba(0,0,0,.12);aspect-ratio:1/1}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+    .chip{backdrop-filter:blur(10px);padding:8px 12px;border-radius:999px;border:1px solid var(--hairline);font-size:.86rem;background:color-mix(in oklab,white 22%,transparent)}
 
-    /* About */
+    /* ABOUT */
     .about{padding:var(--lg);text-align:center}
     .about h2{font-size:var(--fs-5);margin-bottom:var(--xs)}
     .about p{max-width:70ch;margin-inline:auto;color:rgb(var(--muted));font-size:var(--fs-3);line-height:1.7}
-    .timeline{margin-top:var(--md);display:grid;gap:var(--sm)}
-    .step{display:grid;grid-template-columns:28px 1fr;gap:var(--sm);align-items:start}
-    .step .dot{width:10px;height:10px;border-radius:50%;background:var(--brand-2);box-shadow:0 0 14px var(--brand-2);margin-top:8px}
 
-    /* Stats strip */
+    /* STATS */
     .stats{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sm);padding:var(--sm)}
     .stat{grid-column:span 4;padding:var(--md);text-align:center;border-radius:16px;background:color-mix(in oklab,white 22%,transparent);border:1px solid var(--hairline)}
     .stat b{font-size:clamp(18px,4vw,28px)}
 
-    /* Projects */
+    /* PROJECTS */
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--md);padding:var(--md)}
     .card{grid-column:span 4;padding:var(--md);border-radius:18px;border:1px solid var(--hairline);background:linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.18));box-shadow:var(--shadow-md)}
     .card h3{margin:2px 0 var(--xs);font-size:var(--fs-4)}
     .card p{color:rgb(var(--muted));font-size:var(--fs-2)}
-    .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--sm)}
-    .tag{font-size:.8rem;padding:6px 10px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent)}
+    .card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--sm)}
 
-    /* Gallery */
+    /* GALLERY */
     .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--md);padding:var(--md)}
     .tile{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--hairline)}
     .tile img{width:100%;display:block;transition:transform .5s,box-shadow .5s;aspect-ratio:16/10;object-fit:cover}
     .tile:hover img{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 30px rgba(0,0,0,.14)}
     .tile span{position:absolute;left:10px;bottom:10px;font-size:.78rem;background:color-mix(in oklab,white 22%,transparent);border:1px solid var(--hairline);padding:6px 10px;border-radius:999px}
 
-    /* Contact */
+    /* CONTACT */
     .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--md);padding:var(--md)}
     form{display:grid;gap:var(--sm)}
     input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.9);font-size:var(--fs-2)}
@@ -170,10 +153,8 @@
     .backtop{position:fixed;right:16px;bottom:16px;padding:10px 12px;border-radius:999px;border:1px solid var(--hairline);background:color-mix(in oklab,white 20%,transparent);text-decoration:none;color:inherit;opacity:0;transform:translateY(14px);transition:opacity .3s,transform .3s}
     .backtop.show{opacity:1;transform:none}
 
-    /* Responsive */
     @media (max-width:960px){
-      .hero{grid-template-columns:1fr}
-      .hero.bg-image{padding:calc(var(--lg) + 10px) var(--md)}
+      .hero-pro{grid-template-columns:1fr}
       .card{grid-column:span 6}
       .contact{grid-template-columns:1fr}
       .stat{grid-column:span 6}
@@ -183,58 +164,59 @@
       .stat{grid-column:span 12}
     }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bg{animation:none}.reveal{opacity:1;transform:none}.tile img,.btn{transition:none}}
-
-    /* Print */
-    @media print{.bg,.noise,.backtop,.nav-wrap,.theme-toggle{display:none!important}.glass{box-shadow:none;border:1px solid #999}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.tile img,.btn{transition:none}}
+    @media print{.noise,.backtop,.nav-wrap{display:none!important}.glass{box-shadow:none;border:1px solid #999}}
   </style>
 </head>
 <body id="top">
-  <a href="#main" class="sr-only skip">Saltar al contenido</a>
-  <div class="bg" aria-hidden="true"></div>
+  <a href="#main" class="sr-only">Saltar al contenido</a>
   <div class="noise" aria-hidden="true"></div>
-
-  <!-- Theme toggle -->
-  <div class="theme-toggle" role="group" aria-label="Cambiar tema">
-    <button id="themeLight" aria-pressed="false" title="Claro">🌤️</button>
-    <button id="themeDark" aria-pressed="false" title="Oscuro">🌙</button>
-    <button id="themeAuto" aria-pressed="true" title="Auto">🪄</button>
-  </div>
 
   <!-- NAV -->
   <div class="container nav-wrap reveal">
     <nav class="glass soft" aria-label="Barra de navegación">
       <div class="brand"><span class="dot" aria-hidden="true"></span><span>Aldair</span></div>
       <div class="nav-links" role="navigation">
-        <a class="btn" href="#about" data-nav>Sobre mí</a>
-        <a class="btn" href="#projects" data-nav>Proyectos</a>
-        <a class="btn" href="#galeria" data-nav>Galería</a>
-        <a class="btn primary" href="#contacto" data-nav>Contacto</a>
+        <a class="btn" href="#about">Sobre mí</a>
+        <a class="btn" href="#projects">Proyectos</a>
+        <a class="btn" href="#galeria">Galería</a>
+        <a class="btn primary" href="#contacto">Contacto</a>
       </div>
     </nav>
   </div>
 
   <main id="main">
-    <!-- HERO: pantalla completa con imagen difusa -->
-    <section class="section reveal" aria-labelledby="hero-title">
-      <div class="hero bg-image">
-        <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop');"></div>
-        <div class="bg-shade"></div>
+    <!-- HERO · Glass Banner -->
+    <section class="container section reveal" aria-labelledby="hero-title">
+      <div class="glass hero-pro">
+        <div class="halo" aria-hidden="true"></div>
 
-        <div class="center">
-          <div class="glass" style="padding:var(--lg)">
-            <p style="margin:0 0 var(--xs) 0;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.9;color:#fff">Portfolio</p>
-            <h1 id="hero-title">Hola, soy <span style="background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Aldair</span>.</h1>
-            <p>Creo productos digitales con estética <b>Liquid Glass</b>, alto rendimiento y accesibilidad real.</p>
-            <div class="cta" style="margin-top:var(--md);justify-content:center">
-              <a class="btn" href="#projects">Ver proyectos</a>
-              <a class="btn primary" href="#contacto">Hablemos</a>
-            </div>
+        <div>
+          <p style="margin:0 0 var(--xs) 0;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Portfolio</p>
+          <h1 id="hero-title">Hola, soy <span class="grad">Aldair</span>.</h1>
+          <p>Creo productos digitales con estética <b>Liquid Glass</b>, alto rendimiento y accesibilidad real.</p>
+          <div class="cta">
+            <a class="btn" href="#projects">Ver proyectos</a>
+            <a class="btn" href="#contacto">Hablemos</a>
           </div>
         </div>
 
-        <a href="#about" class="scrolldown" aria-label="Desplázate a Sobre mí">↓</a>
+        <div class="right">
+          <div class="avatar-card">
+            <img src="https://via.placeholder.com/320x320.png?text=A" alt="Avatar de Aldair" width="132" height="132" loading="lazy" decoding="async" />
+            <div class="chips" style="margin-top:10px">
+              <span class="chip">PWA</span>
+              <span class="chip">Firebase</span>
+              <span class="chip">Stripe</span>
+              <span class="chip">A11y</span>
+            </div>
+          </div>
+          <div class="chips">
+            <span class="chip">+20 interfaces</span>
+            <span class="chip">~98 Lighthouse</span>
+            <span class="chip">WCAG AA</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -243,15 +225,10 @@
       <div class="glass about">
         <h2 id="about-title">Sobre mí</h2>
         <p>Ingeniero informático y creador. Diseño interfaces con estética Liquid Glass para apps y webs. Me enfoco en accesibilidad, microinteracciones y rendimiento. Trabajo con Firebase, Stripe y PWAs.</p>
-        <div class="timeline" aria-label="Hitos recientes">
-          <div class="step"><span class="dot" aria-hidden="true"></span><div><strong>2025</strong> · CuidApp MVP (Geo + pagos + SOS)</div></div>
-          <div class="step"><span class="dot" style="background:var(--brand-1);box-shadow:0 0 14px var(--brand-1)" aria-hidden="true"></span><div><strong>2024</strong> · Carta Nomo (PWA) con grid 1–100 y panel admin</div></div>
-          <div class="step"><span class="dot" style="background:var(--brand-3);box-shadow:0 0 14px var(--brand-3)" aria-hidden="true"></span><div><strong>2023</strong> · Iberia Sonora – arquitectura musical</div></div>
-        </div>
       </div>
     </section>
 
-    <!-- STATS STRIP -->
+    <!-- STATS -->
     <section class="container section reveal">
       <div class="glass soft">
         <div class="stats">
@@ -267,26 +244,26 @@
       <div class="glass">
         <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
           <h2 id="projects-title" style="font-size:var(--fs-5);margin:0">Proyectos</h2>
-          <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Selección</span>
+          <span class="tag">Selección</span>
         </div>
         <div class="grid">
           <article class="card" aria-labelledby="p1-title">
             <h3 id="p1-title">CuidApp</h3>
             <p>Familias ↔ cuidadores verificados. Geo, agenda, Stripe Connect, SOS.</p>
             <div class="tags"><span class="tag">PWA</span><span class="tag">Firebase</span><span class="tag">Stripe</span></div>
-            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Demo</a><a class="btn ghost" href="#">Código</a></div>
+            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Demo</a><a class="btn" href="#">Código</a></div>
           </article>
           <article class="card" aria-labelledby="p2-title">
             <h3 id="p2-title">Carta Nomo</h3>
             <p>Carta digital con Liquid Glass, grid 1–100, voz e imágenes optimizadas.</p>
             <div class="tags"><span class="tag">PWA</span><span class="tag">A11y</span><span class="tag">Performance</span></div>
-            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Demo</a><a class="btn ghost" href="#">Código</a></div>
+            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Demo</a><a class="btn" href="#">Código</a></div>
           </article>
           <article class="card" aria-labelledby="p3-title">
             <h3 id="p3-title">Iberia Sonora</h3>
             <p>Estudio de arquitectura musical: lanzamientos, ambient y experiencias.</p>
             <div class="tags"><span class="tag">Audio</span><span class="tag">Branding</span></div>
-            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Escuchar</a><a class="btn ghost" href="#">Press Kit</a></div>
+            <div class="cta" style="margin-top:var(--sm)"><a class="btn" href="#">Escuchar</a><a class="btn" href="#">Press Kit</a></div>
           </article>
         </div>
       </div>
@@ -297,13 +274,13 @@
       <div class="glass">
         <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;padding:var(--sm) var(--md) 0">
           <h2 id="gallery-title" style="font-size:var(--fs-5);margin:0">Galería</h2>
-          <span style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75">Liquid Glass UI</span>
+          <span class="tag">Liquid Glass UI</span>
         </div>
         <div class="gallery">
-          <figure class="tile"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="Tema Aurora" loading="lazy" decoding="async" width="1200" height="750"><span>Aurora</span></figure>
-          <figure class="tile"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Tema Ocean" loading="lazy" decoding="async" width="1200" height="750"><span>Ocean</span></figure>
-          <figure class="tile"><img src="https://images.unsplash.com/photo-1602526432604-cd3d7f9fcf2e?q=80&w=1200&auto=format&fit=crop" alt="Tema Neon" loading="lazy" decoding="async" width="1200" height="750"><span>Neon</span></figure>
-          <figure class="tile"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Tema Sunset" loading="lazy" decoding="async" width="1200" height="750"><span>Sunset</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="Tema Aurora" width="1200" height="750" loading="lazy" decoding="async"><span>Aurora</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Tema Ocean" width="1200" height="750" loading="lazy" decoding="async"><span>Ocean</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1602526432604-cd3d7f9fcf2e?q=80&w=1200&auto=format&fit=crop" alt="Tema Neon" width="1200" height="750" loading="lazy" decoding="async"><span>Neon</span></figure>
+          <figure class="tile"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Tema Sunset" width="1200" height="750" loading="lazy" decoding="async"><span>Sunset</span></figure>
         </div>
       </div>
     </section>
@@ -355,41 +332,20 @@
     const onScroll = ()=>{ if(window.scrollY > 420){ bt.classList.add('show') } else { bt.classList.remove('show') } };
     document.addEventListener('scroll', onScroll, { passive: true });
 
-    // Nav active state
-    const navLinks = [...document.querySelectorAll('[data-nav]')];
+    // (Opcional) Nav active state
+    const navLinks = [...document.querySelectorAll('.nav-links a')];
     const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
     const secIO = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ const id = '#' + e.target.id; navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href')===id)); } })
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const id = '#' + e.target.id;
+          navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href')===id));
+        }
+      })
     }, { rootMargin: '0px 0px -70% 0px', threshold: .1 }) : null;
     sections.forEach(s=> secIO?.observe(s));
-
-    // Form validation (mock)
-    const form = document.getElementById('contact-form');
-    form?.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      if(!form.checkValidity()){ form.reportValidity(); return }
-      const data = Object.fromEntries(new FormData(form).entries());
-      console.log('Contacto:', data); // integrar con endpoint real
-      form.reset();
-      alert('¡Gracias! Te responderé pronto.');
-    });
-
-    // Theme toggle (light/dark/auto)
-    const root = document.documentElement; const LS_KEY = 'lg-theme-mode';
-    const setMode = (m)=>{
-      localStorage.setItem(LS_KEY, m);
-      document.getElementById('themeLight').setAttribute('aria-pressed', m==='light');
-      document.getElementById('themeDark').setAttribute('aria-pressed', m==='dark');
-      document.getElementById('themeAuto').setAttribute('aria-pressed', m==='auto');
-      if(m==='light'){ root.removeAttribute('data-theme'); }
-      else if(m==='dark'){ root.setAttribute('data-theme','dark'); }
-      else{ root.removeAttribute('data-theme'); }
-    }
-    document.getElementById('themeLight').onclick=()=>setMode('light');
-    document.getElementById('themeDark').onclick=()=>setMode('dark');
-    document.getElementById('themeAuto').onclick=()=>setMode('auto');
-    try{ setMode(localStorage.getItem(LS_KEY) || 'auto') }catch(e){}
   </script>
 </body>
 </html>
+
 
