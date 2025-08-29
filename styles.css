@@ -23,7 +23,7 @@
       /* Sticky nav + anchor offset */
       --nav-sticky-gap: 16px;
       --nav-height: 60px;
-      --anchor-offset: calc(var(--nav-height) + var(--nav-sticky-gap) + 16px);
+      --anchor-offset: calc(var(--nav-height) + var(--nav-sticky-gap) + var(--md));
     }
     [data-theme="dark"]{
       --ink:242,246,252; --muted:200,210,230;
@@ -44,6 +44,8 @@
     img{max-width:100%;height:auto}
     .container{width:min(var(--container),92%);margin-inline:auto}
     .section{margin:var(--xl) 0}
+    /* Coloca la primera sección justo debajo del nav */
+    main>.section:first-of-type{margin-top:0}
     /* 🔹 Utilidad para igualar ancho de nav y secciones */
     .narrow{ width:min(var(--content), 100%); margin-inline:auto; }
 
