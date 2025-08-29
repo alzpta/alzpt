@@ -1,51 +1,239 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio elegante con efecto glass estilo Apple">
-  <title>Portfolio Elegante</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Landing Personal · Liquid Glass</title>
+  <style>
+    :root {
+      --primary: rgba(255, 255, 255, 0.25);
+      --bg-start: rgba(128, 216, 255, 0.4);
+      --bg-end: rgba(13, 71, 161, 0.15);
+      --text-color: rgba(30, 30, 30, 0.92);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --maxw: 1100px;
+    }
 
-  <link rel="stylesheet" href="style.css">
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--text-color);
+      background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.65));
+      overflow-x: hidden;
+    }
+
+    .container { width: min(var(--maxw), 92%); margin-inline: auto; }
+
+    /* NAV */
+    .nav-wrap { position: sticky; top: 12px; z-index: 20; }
+    nav.glass { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px }
+    .brand .dot { width:12px; height:12px; border-radius:999px; background: rgba(255,255,255,.7); box-shadow:0 0 20px rgba(255,255,255,.6) }
+    .nav-links { display:flex; gap:8px; align-items:center; flex-wrap:wrap }
+    .btn { padding:10px 14px; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,0.4); background: var(--primary); cursor:pointer; text-decoration:none; color:inherit; transition: background .25s, box-shadow .25s }
+    .btn:hover { background: rgba(255,255,255,.35); box-shadow: 0 6px 20px rgba(255,255,255,.35) }
+
+    /* GLASS CORE */
+    .glass { position: relative; background: linear-gradient(135deg, var(--bg-start), var(--bg-end)); border: 1px solid rgba(255, 255, 255, 0.35); border-radius: var(--radius-lg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); overflow: hidden; }
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .glass { background: rgba(255,255,255,.95) } }
+    .glass::before { content:""; position:absolute; top:-10%; left:-10%; width:120%; height:120%; background: radial-gradient(circle at top left, rgba(255,255,255,.6), transparent 70%); pointer-events:none }
+
+    /* HERO */
+    header.hero { display:grid; grid-template-columns: 1.2fr 1fr; gap:18px; align-items:center; padding:32px; }
+    header.hero .intro h1 { font-size: clamp(28px, 6vw, 54px); line-height:1.06 }
+    header.hero .intro p { margin-top: 10px; font-size: 1.05rem; opacity: .9 }
+    header.hero .cta { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px }
+    .avatar { display:grid; place-items:center; padding:18px }
+    .avatar img { width: 140px; height: 140px; border-radius: 50%; border: 2px solid rgba(255,255,255,.5); box-shadow: 0 4px 20px rgba(0,0,0,.12) }
+
+    /* ABOUT */
+    .section { margin: 28px 0 }
+    .about { padding: 28px; text-align:center }
+    .about h2 { font-size: 1.9rem; margin-bottom: 8px }
+    .about p { opacity:.9; line-height:1.6 }
+
+    /* PROJECTS */
+    .projects-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 18px 20px }
+    .grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 12px; padding: 16px }
+    .card { grid-column: span 4; padding:16px; border-radius: var(--radius-md); border:1px solid rgba(255,255,255,.35); background: linear-gradient(135deg, rgba(255,255,255,.25), rgba(255,255,255,.18)); box-shadow: 0 6px 22px rgba(0,0,0,.08) }
+    .card h3 { margin: 6px 0 6px; font-size: 1.1rem }
+    .card p { font-size: .95rem; opacity:.9 }
+    .chip { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.4); background: var(--primary); font-size:.8rem }
+    .card .actions { display:flex; gap:8px; margin-top:12px }
+
+    /* GALLERY */
+    .gallery { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; padding: 16px }
+    .tile { position:relative; border-radius: var(--radius-md); overflow:hidden; border:1px solid rgba(255,255,255,.35) }
+    .tile img { width:100%; display:block; transition: transform .6s, box-shadow .6s }
+    .tile:hover img { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,.15) }
+    .tile span { position:absolute; left:10px; bottom:10px; font-size:.8rem; background: var(--primary); border:1px solid rgba(255,255,255,.4); padding:6px 10px; border-radius:999px }
+
+    /* CONTACT */
+    .contact { display:grid; grid-template-columns: 1.1fr 1fr; gap:14px; padding: 18px }
+    form { display:grid; gap:10px }
+    input, textarea { width:100%; padding:12px 14px; border-radius: var(--radius-md); border:1px solid rgba(0,0,0,.12); background: rgba(255,255,255,.85) }
+
+    /* SOCIALS */
+    .socials { display:flex; gap:10px; flex-wrap:wrap }
+    .icon-btn { display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.4); background: var(--primary); text-decoration:none; color:inherit }
+    .icon { width:18px; height:18px; display:inline-block }
+
+    footer { text-align:center; padding: 16px; opacity: .75 }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px){ header.hero{ grid-template-columns: 1fr } .card{ grid-column: span 6 } .contact{ grid-template-columns:1fr } }
+    @media (max-width: 640px){ .card{ grid-column: span 12 } }
+  </style>
 </head>
 <body>
+  <!-- NAV -->
+  <div class="container nav-wrap">
+    <nav class="glass">
+      <div class="brand"><span class="dot"></span> <span>Mi Portfolio</span></div>
+      <div class="nav-links">
+        <a class="btn" href="#about">Sobre mí</a>
+        <a class="btn" href="#projects">Proyectos</a>
+        <a class="btn" href="#galeria">Galería</a>
+        <a class="btn" href="#contacto">Contacto</a>
+      </div>
+    </nav>
+  </div>
 
-<header class="glass">
-  <!-- Imagen de perfil de ejemplo -->
-  <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?&w=200&h=200&fit=crop" alt="Foto de perfil">
-  <h1>Tu Nombre</h1>
-  <p>Descripción o lema elegante</p>
-  <button class="btn-contacto" type="button" onclick="alert('Añade aquí tu enlace de contacto')">Contacto</button>
-</header>
-
-<main>
-  <section class="about glass">
-    <h2>Sobre mí</h2>
-    <p>
-      Breve descripción sobre tu experiencia, tus intereses o visión profesional.
-      ¡Puedes personalizar este texto a tu gusto!
-    </p>
+  <!-- HERO -->
+  <section class="container section">
+    <div class="glass">
+      <header class="hero">
+        <div class="intro">
+          <h1>Hola, soy <span style="background:linear-gradient(90deg, rgba(255,255,255,.9), rgba(255,255,255,.7)); -webkit-background-clip:text; background-clip:text; color:transparent">Aldair</span>.</h1>
+          <p>Desarrollo productos digitales con enfoque en experiencias <b>Liquid Glass</b>, accesibles y con diseño limpio.</p>
+          <div class="cta">
+            <a class="btn" href="#projects">Ver proyectos</a>
+            <a class="btn" href="#contacto">Hablemos</a>
+          </div>
+          <div class="socials" style="margin-top:10px">
+            <a class="icon-btn" href="#" aria-label="LinkedIn">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0V8zm7.5 0h4.8v2.2h.07c.67-1.2 2.3-2.46 4.73-2.46 5.06 0 5.99 3.33 5.99 7.66V24h-5V16.4c0-1.81-.03-4.14-2.52-4.14-2.52 0-2.9 1.97-2.9 4v7.74h-5V8z"/></svg>
+              LinkedIn
+            </a>
+            <a class="icon-btn" href="#" aria-label="GitHub">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.98 5.25.98 11.52c0 4.86 3.15 8.98 7.51 10.43.55.1.75-.24.75-.53 0-.26-.01-1.11-.02-2.01-3.06.67-3.7-1.3-3.7-1.3-.5-1.27-1.22-1.61-1.22-1.61-.99-.68.08-.66.08-.66 1.1.08 1.68 1.13 1.68 1.13.98 1.67 2.58 1.19 3.21.91.1-.71.38-1.19.69-1.46-2.44-.28-5-1.22-5-5.42 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.91 0 0 .93-.3 3.05 1.13a10.5 10.5 0 0 1 5.56 0c2.12-1.43 3.05-1.13 3.05-1.13.6 1.51.22 2.63.11 2.91.7.77 1.13 1.76 1.13 2.95 0 4.21-2.57 5.14-5.02 5.41.39.34.73 1.01.73 2.05 0 1.48-.01 2.67-.01 3.03 0 .29.2.64.75.53a10.53 10.53 0 0 0 7.5-10.43C23.02 5.25 18.27.5 12 .5z"/></svg>
+              GitHub
+            </a>
+            <a class="icon-btn" href="#" aria-label="Instagram">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.4.5.6.3 1 .6 1.5 1.1.5.5.8.9 1.1 1.5.3.5.4 1.2.5 2.4.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.5 2.4-.3.6-.6 1-1.1 1.5-.5.5-.9.8-1.5 1.1-.5.3-1.2.4-2.4.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.4-.5-.6-.3-1-.6-1.5-1.1-.5-.5-.8-.9-1.1-1.5-.3-.5-.4-1.2-.5-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.5-2.4.3-.6.6-1 1.1-1.5.5-.5.9-.8 1.5-1.1.5-.3 1.2-.4 2.4-.5C8.4 2.2 8.8 2.2 12 2.2m0 1.8c-3.1 0-3.5 0-4.7.1-1 .1-1.6.2-1.9.4-.5.2-.8.4-1.1.7-.3.3-.6.6-.7 1.1-.2.3-.3.9-.4 1.9-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1 .2 1.6.4 1.9.2.5.4.8.7 1.1.3.3.6.6 1.1.7.3.2.9.3 1.9.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1-.1 1.6-.2 1.9-.4.5-.2.8-.4 1.1-.7.3-.3.6-.6.7-1.1.2-.3.3-.9.4-1.9.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1-.2-1.6-.4-1.9-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.6-1.1-.7-.3-.2-.9-.3-1.9-.4-1.2-.1-1.6-.1-4.7-.1m0 2.8a6.4 6.4 0 1 1 0 12.8 6.4 6.4 0 0 1 0-12.8m0 10.6a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4M18.4 6.4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+        <div class="avatar">
+          <img src="https://via.placeholder.com/140" alt="Avatar" />
+        </div>
+      </header>
+    </div>
   </section>
 
-  <section class="gallery glass">
-    <!-- Reemplaza las URLs con tus imágenes -->
-    <img src="https://picsum.photos/id/1011/600/400" alt="Proyecto 1">
-    <img src="https://picsum.photos/id/1050/600/400" alt="Proyecto 2">
-    <img src="https://picsum.photos/id/1035/600/400" alt="Proyecto 3">
-    <img src="https://picsum.photos/id/1029/600/400" alt="Proyecto 4">
+  <!-- ABOUT -->
+  <section id="about" class="container section">
+    <div class="glass about">
+      <h2>Sobre mí</h2>
+      <p>Ingeniero informático y creador. Diseño interfaces con estética Liquid Glass para apps y webs. Me enfoco en accesibilidad, rendimiento y detalles de microinteracción.</p>
+    </div>
   </section>
-</main>
 
-<footer class="glass">
-  <p>&copy; 2024 Tu Nombre. Todos los derechos reservados.</p>
-</footer>
+  <!-- PROJECTS -->
+  <section id="projects" class="container section">
+    <div class="glass">
+      <div class="projects-head">
+        <h2>Proyectos</h2>
+        <div class="chip">Disponible para colaboraciones</div>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>CuidApp</h3>
+          <p>Plataforma para conectar familias con cuidadores verificados, pagos integrados y SOS.</p>
+          <div class="actions">
+            <a href="#" class="btn">Ver demo</a>
+            <a href="#" class="btn">Código</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Carta Nomo</h3>
+          <p>PWA de carta digital con Liquid Glass, grid 1–100, voz y panel admin.</p>
+          <div class="actions">
+            <a href="#" class="btn">Ver demo</a>
+            <a href="#" class="btn">Código</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Iberia Sonora</h3>
+          <p>Estudio de arquitectura musical: lanzamientos, experiencias y branding sonoro.</p>
+          <div class="actions">
+            <a href="#" class="btn">Escuchar</a>
+            <a href="#" class="btn">Press Kit</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-<script>
-  // Animación inicial de la galería
-  window.addEventListener('load', () => {
-    document.querySelector('.gallery').classList.add('fade-in');
-  });
-</script>
+  <!-- GALLERY -->
+  <section id="galeria" class="container section">
+    <div class="glass">
+      <div class="projects-head">
+        <h2>Galería</h2>
+        <div class="chip">Liquid Glass UI</div>
+      </div>
+      <div class="gallery">
+        <div class="tile"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="Aurora" /><span>Aurora</span></div>
+        <div class="tile"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Ocean" /><span>Ocean</span></div>
+        <div class="tile"><img src="https://images.unsplash.com/photo-1602526432604-cd3d7f9fcf2e?q=80&w=1200&auto=format&fit=crop" alt="Neon" /><span>Neon</span></div>
+        <div class="tile"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Sunset" /><span>Sunset</span></div>
+      </div>
+    </div>
+  </section>
 
+  <!-- CONTACT -->
+  <section id="contacto" class="container section">
+    <div class="glass contact">
+      <div>
+        <h2>Contacto</h2>
+        <p>¿Tienes un proyecto en mente? Envíame un mensaje.</p>
+        <div style="margin-top:10px" class="socials">
+          <a class="icon-btn" href="mailto:tuemail@ejemplo.com" aria-label="Email">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 13 2 6.76V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6.76L12 13z"/><path d="M22 6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2l10 6L22 6z"/></svg>
+            Email
+          </a>
+          <a class="icon-btn" href="#" aria-label="Calendly">🗓️ Agenda</a>
+          <a class="icon-btn" href="#" aria-label="WhatsApp">💬 WhatsApp</a>
+        </div>
+      </div>
+      <form onsubmit="event.preventDefault(); this.reset(); alert('¡Gracias! Te responderé pronto.')">
+        <input type="text" name="name" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu email" required>
+        <textarea name="message" rows="5" placeholder="Cuéntame sobre tu proyecto" required></textarea>
+        <button class="btn" type="submit">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Tu Nombre — Hecho con Liquid Glass
+  </footer>
+
+  <script>
+    // Año
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll suave
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const el = document.querySelector(a.getAttribute('href'));
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}) }
+      })
+    })
+  </script>
 </body>
 </html>
+
