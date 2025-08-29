@@ -3,24 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio futurista con animaciones y estilo moderno">
-  <title>Portfolio Futurista</title>
+  <meta name="description" content="Portfolio elegante con efecto glass estilo Apple">
+  <title>Portfolio Elegante</title>
 
-  <!-- Fuente futurista -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="stars"></div>
-
 <header class="glass">
   <!-- Imagen de perfil de ejemplo -->
-  <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?&w=200&h=200&fit=crop" alt="Foto de perfil futurista">
+  <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?&w=200&h=200&fit=crop" alt="Foto de perfil">
   <h1>Tu Nombre</h1>
-  <p>Descripción o lema futurista</p>
+  <p>Descripción o lema elegante</p>
   <button class="btn-contacto" type="button" onclick="alert('Añade aquí tu enlace de contacto')">Contacto</button>
 </header>
 
@@ -28,7 +22,7 @@
   <section class="about glass">
     <h2>Sobre mí</h2>
     <p>
-      Breve descripción sobre tu experiencia, tus intereses tecnológicos o visión futurista.
+      Breve descripción sobre tu experiencia, tus intereses o visión profesional.
       ¡Puedes personalizar este texto a tu gusto!
     </p>
   </section>
@@ -51,17 +45,6 @@
   window.addEventListener('load', () => {
     document.querySelector('.gallery').classList.add('fade-in');
   });
-
-  // Generar estrellas en posiciones aleatorias
-  const starContainer = document.querySelector('.stars');
-  const numStars = 70; // ajusta la cantidad de estrellas
-  for (let i = 0; i < numStars; i++) {
-    const star = document.createElement('span');
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.animationDelay = Math.random() * 2 + 's';
-    starContainer.appendChild(star);
-  }
 </script>
 
 </body>
