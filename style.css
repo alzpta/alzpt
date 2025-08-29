@@ -23,6 +23,17 @@ body {
   to   { background-position: 100% 100%; }
 }
 
+/* Estilo efecto vidrio */
+.glass {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--primary);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px var(--primary);
+  margin: 20px;
+}
+
 header {
   display: flex;
   flex-direction: column;
@@ -78,12 +89,6 @@ header p {
 .about {
   padding: 40px 10%;
   text-align: center;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(3px);
-  border-top: 2px solid var(--primary);
-  border-bottom: 2px solid var(--primary);
-  box-shadow: 0 0 15px var(--primary);
-  margin: 20px 0;
 }
 .about h2 {
   font-size: 2rem;
